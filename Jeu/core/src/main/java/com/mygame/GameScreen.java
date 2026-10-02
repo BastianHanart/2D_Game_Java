@@ -20,6 +20,7 @@ public class GameScreen implements Screen {
     private int currentLevel = 1;
     private boolean side;
     private boolean TpAllowed = true;
+    private Monster monster;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -27,6 +28,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        monster = new Monster(600, 200);
         batch = new SpriteBatch();
         shapeRenderer = new ShapeRenderer();
         character = new Character();
@@ -92,6 +94,17 @@ public class GameScreen implements Screen {
         }
     }
 
+    private void checkAttackCollisions() {
+
+        if (!character.isAttacking()) {
+            return;
+        }
+
+        if (character.getAttackHitbox().overlaps(monster.getHitbox())) {
+            monster.takeDamage(character.getDamage());
+        }
+    }
+
     // ===========================================
     //                CAMERA
     // ===========================================
@@ -140,6 +153,7 @@ public class GameScreen implements Screen {
 
         character.update(delta);
         checkPlatformCollisions();
+        checkAttackCollisions();
         checkLevelChange();
         updateCamera();
         renderTestMap();

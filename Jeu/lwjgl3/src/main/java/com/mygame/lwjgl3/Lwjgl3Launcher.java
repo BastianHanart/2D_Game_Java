@@ -19,7 +19,7 @@ public class Lwjgl3Launcher {
         Lwjgl3ApplicationConfiguration configuration =
                 new Lwjgl3ApplicationConfiguration();
 
-        configuration.setTitle("MyFirstLibGDXGame");
+        configuration.setTitle("Auralis");
 
         configuration.useVsync(true);
 
@@ -30,7 +30,7 @@ public class Lwjgl3Launcher {
         configuration.setFullscreenMode(
                 Lwjgl3ApplicationConfiguration.getDisplayMode()
         );
-
+        // ------ Plein écran ------ //
         configuration.setWindowIcon(
                 "libgdx128.png",
                 "libgdx64.png",

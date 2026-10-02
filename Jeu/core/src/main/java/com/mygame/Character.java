@@ -16,10 +16,14 @@ public class Character {
 
     protected int life = 100;
     protected int damage = 1;
+    protected int range = 200;
     protected int luck = 0;
+    private boolean hasHit = false;
     protected float critical_rate = 0.0f;
     protected float critical_damage = 2;
-
+    private boolean attacking = false;
+    private float attackTime = 0f;
+    private final float attackDuration = 0.2f;
     private float speed;
     private float runSpeed;
 
@@ -33,19 +37,24 @@ public class Character {
     private float dashEndX;
     private float dashSpeed = 1000f;
     private boolean facingRight = true;
+    private float dashCooldown = 1.0f;
+    private float dashCooldownTimer = 0f;
 
     // ===========================================
     //                SPRITE
     // ===========================================
 
     private Texture spriteSheet_marche;
+    private TextureRegion dashRightFrame;
+    private TextureRegion dashLeftFrame;
     private Texture spriteSheet_jump;
+    private Texture spriteSheet_dash;
     private Animation<TextureRegion> walkRightAnimation;
     private Animation<TextureRegion> walkLeftAnimation;
     private TextureRegion[] jumpRightFrames;
     private TextureRegion[] jumpLeftFrames;
     private float landingAnimationTime = 0f;
-    private final float landingAnimationDuration = 0.1f;
+    private final float landingAnimationDuration = 0.2f;
     private float animationTime = 0f;
 
     // ===========================================
@@ -108,6 +117,10 @@ public class Character {
         // ------ Sprite ------ //
         spriteSheet_marche = new Texture("Personnage_Marche.png");
         spriteSheet_jump = new Texture("Personnage_Jump.png");
+        spriteSheet_dash = new Texture("Personnage_Dash.png");
+        TextureRegion[][] tmp_dash = TextureRegion.split(spriteSheet_dash, 165, 134);
+        dashRightFrame = tmp_dash[0][0];
+        dashLeftFrame = tmp_dash[0][1];
         TextureRegion[][] tmp = TextureRegion.split(spriteSheet_marche,100,134);
         TextureRegion[] rightFrames = new TextureRegion[3];
         TextureRegion[] leftFrames = new TextureRegion[3];
@@ -212,7 +225,7 @@ public class Character {
             moving_right = false;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !dashing) {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !dashing && dashCooldownTimer <= 0) {
             dashing = true;
 
             if (facingRight) {
@@ -220,6 +233,17 @@ public class Character {
             } else {
                 dashEndX = x - 200;
             }
+            dashCooldownTimer = dashCooldown;
+        }
+
+        if (dashCooldownTimer > 0) {
+            dashCooldownTimer -= delta;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E) && !attacking) {
+            attacking = true;
+            hasHit = false;
+            attackTime = attackDuration;
         }
 
         if (dashing) {
@@ -239,6 +263,15 @@ public class Character {
                     x = dashEndX;
                     dashing = false;
                 }
+            }
+        }
+
+        if (attacking) {
+            attackTime -= delta;
+
+            if (attackTime <= 0) {
+                attackTime = 0;
+                attacking = false;
             }
         }
 
@@ -276,6 +309,36 @@ public class Character {
 
     public Rectangle getHitbox() {
         return new Rectangle(x,y,width,height);
+    }
+
+    public Rectangle getAttackHitbox() {
+        if (!attacking) {
+            return new Rectangle(0, 0, 0, 0);
+        }
+
+        if (facingRight) {
+            return new Rectangle(
+                x + width,
+                y + 20,
+                range,
+                height - 40
+            );
+        } else {
+            return new Rectangle(
+                x - range,
+                y + 20,
+                range,
+                height - 40
+            );
+        }
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
     }
 
     // ===========================================
@@ -316,79 +379,93 @@ public class Character {
     // ===========================================
 
     public void render(SpriteBatch batch) {
-        
+
         TextureRegion currentFrame;
-        
+
         // ===========================================
-        //              ANIMATION DE SAUT
+        //                DASH
         // ===========================================
-        
-        if (!onGround) {
+
+        if (dashing) {
+
             if (facingRight) {
-                // Montée
+                currentFrame = dashRightFrame;
+            } else {
+                currentFrame = dashLeftFrame;
+            }
+
+        // ===========================================
+        //           ANIMATION DE SAUT
+        // ===========================================
+
+        } else if (!onGround) {
+
+            if (facingRight) {
+
                 if (verticalSpeed > 0) {
                     currentFrame = jumpRightFrames[0];
                     this.width = 55;
                     this.height = 115;
-                // Descente
                 } else {
                     currentFrame = jumpRightFrames[1];
                     this.width = 55;
                     this.height = 115;
                 }
+
             } else {
-                // Montée
+
                 if (verticalSpeed > 0) {
                     currentFrame = jumpLeftFrames[0];
                     this.width = 55;
                     this.height = 115;
-                // Descente
                 } else {
                     currentFrame = jumpLeftFrames[1];
                     this.width = 55;
                     this.height = 115;
                 }
             }
-        
+
         // ===========================================
         //              ATTERRISSAGE
         // ===========================================
-        
+
         } else if (landingAnimationTime > 0) {
-        
+
             if (facingRight) {
                 currentFrame = jumpRightFrames[2];
             } else {
                 currentFrame = jumpLeftFrames[2];
             }
-        
+
         // ===========================================
         //              ANIMATION MARCHE
         // ===========================================
-        
+
         } else if (moving_right) {
+
             this.width = 55;
             this.height = 115;
             currentFrame = walkRightAnimation.getKeyFrame(animationTime);
-        
+
         } else if (moving_left) {
+
             this.width = 55;
             this.height = 115;
             currentFrame = walkLeftAnimation.getKeyFrame(animationTime);
-        
+
         // ===========================================
-        //                  IDLE
+        //                    IDLE
         // ===========================================
-        
+
         } else {
-        
+
             if (facingRight) {
                 currentFrame = walkRightAnimation.getKeyFrames()[1];
             } else {
                 currentFrame = walkLeftAnimation.getKeyFrames()[1];
             }
         }
-    
+
         batch.draw(currentFrame, x, y);
     }
 
@@ -398,5 +475,7 @@ public class Character {
 
     public void dispose() {
         spriteSheet_marche.dispose();
+        spriteSheet_jump.dispose();
+        spriteSheet_dash.dispose();
     }
 }
