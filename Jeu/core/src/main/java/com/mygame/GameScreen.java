@@ -44,13 +44,11 @@ public class GameScreen implements Screen {
 
     private void checkPlatformCollisions() {
         Rectangle player = character.getHitbox();
-
         for (Platform platform : level.getPlatforms()) {
             Rectangle ground = platform.getHitbox();
             boolean horizontalCollision = player.x + player.width > ground.x && player.x < ground.x + ground.width;
             boolean falling = character.getVerticalSpeed() <= 0;
             boolean landing = player.y <= ground.y + ground.height && player.y >= ground.y + ground.height - 20;
-
             if (horizontalCollision && falling && landing) {
                 character.setY(ground.y + ground.height);
                 character.setVerticalSpeed(0);
@@ -73,13 +71,11 @@ public class GameScreen implements Screen {
             character.setX(level.getWidth() - 150);
             character.setY(200);
         }
-
         level.getMusic().play();
     }
-    
+
     private void checkLevelChange() {
         float playerRight = character.getX() + character.getHitbox().width;
-
         if (playerRight >= level.getWidth() && TpAllowed == true) {
             currentLevel++;
             side = false;
@@ -120,7 +116,6 @@ public class GameScreen implements Screen {
     private void renderTestMap() {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-
         for (Platform platform : level.getPlatforms()) {
             Rectangle rectangle = platform.getHitbox();
             shapeRenderer.setColor(0.3f,0.3f,0.3f,1);
@@ -137,7 +132,6 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         character.update(delta);
         checkPlatformCollisions();
         checkLevelChange();

@@ -23,34 +23,58 @@ public class Character {
     private float speed;
     private float runSpeed;
 
-    // ===========================================
-    //              DEPLACEMENT
-    // ===========================================
+    // =========================================== \\
+    //              DEPLACEMENTS                   \\
+    // =========================================== \\
 
+    // ------ Direction ------ //
     boolean moving_left = false;
     boolean moving_right = false;
+
+    // ------ Dash ------ //
     private boolean dashing = false;
     private float dashEndX;
     private float dashSpeed = 1000f;
     private boolean facingRight = true;
+    private float dashCooldown = 1.0f;
+    private float dashCooldownTimer = 0f;
 
-    // ===========================================
-    //                SPRITE
-    // ===========================================
+    // =========================================== \\
+    //              ATTAQUE                        \\
+    // =========================================== \\
+
+    private boolean attacking = false;
+    private float attackTimer = 0f;
+    private final float attackDuration = 0.2f;
+
+    // =========================================== \\
+    //                SPRITE                       \\
+    // =========================================== \\
 
     private Texture spriteSheet_marche;
     private Texture spriteSheet_jump;
+    private Texture spriteSheet_attack;
+    private Texture spriteSheet_dash;
+
     private Animation<TextureRegion> walkRightAnimation;
     private Animation<TextureRegion> walkLeftAnimation;
+
     private TextureRegion[] jumpRightFrames;
     private TextureRegion[] jumpLeftFrames;
+
+    private TextureRegion attackRightFrame;
+    private TextureRegion attackLeftFrame;
+
+    private TextureRegion dashRightFrame;
+    private TextureRegion dashLeftFrame;
+
     private float landingAnimationTime = 0f;
     private final float landingAnimationDuration = 0.1f;
     private float animationTime = 0f;
 
-    // ===========================================
-    //               POSITION
-    // ===========================================
+    // =========================================== \\
+    //               POSITION                      \\
+    // =========================================== \\
 
     private float x;
     private float y;
@@ -71,49 +95,65 @@ public class Character {
         this.y = y;
     }
 
-    // ===========================================
-    //                 SAUT
-    // ===========================================
+    // =========================================== \\
+    //                 SAUT                        \\
+    // =========================================== \\
 
     private boolean doubleJumpUnlocked = false;
     private int maxJumps = 1;
     private int jumpsLeft;
 
     public void unlockDoubleJump() {
-        doubleJumpUnlocked = true;
+        if (doubleJumpUnlocked == true){
+            doubleJumpUnlocked = false;
+        } else {
+            doubleJumpUnlocked = true;
+        }
         maxJumps = 2;
     }
 
-    // ===========================================
-    //                PHYSIQUE
-    // ===========================================
+    // =========================================== \\
+    //                PHYSIQUE                     \\
+    // =========================================== \\
 
     private float verticalSpeed;
     private float gravity;
     private float jumpForce;
     private boolean onGround;
 
-    // ===========================================
-    //                HITBOX
-    // ===========================================
+    // =========================================== \\
+    //                HITBOX                       \\
+    // =========================================== \\
 
     private int width;
     private int height;
 
-    // ===========================================
-    //              CONSTRUCTEUR
-    // ===========================================
+    // =========================================== \\
+    //              CONSTRUCTEUR                   \\
+    // =========================================== \\
 
     public Character() {
-        // ------ Sprite ------ //
+        // ================== Sprite ================== //
+        // ------ Marche ------ //
         spriteSheet_marche = new Texture("Personnage_Marche.png");
-        spriteSheet_jump = new Texture("Personnage_Jump.png");
-        TextureRegion[][] tmp = TextureRegion.split(spriteSheet_marche,100,134);
+        TextureRegion[][] tmp = TextureRegion.split(spriteSheet_marche, 100, 134);
         TextureRegion[] rightFrames = new TextureRegion[3];
         TextureRegion[] leftFrames = new TextureRegion[3];
-        TextureRegion[][] tmp_jump = TextureRegion.split(spriteSheet_jump, 103, 134); 
+        // ------ Saut ------ //
+        spriteSheet_jump = new Texture("Personnage_Jump.png");
+        TextureRegion[][] tmp_jump = TextureRegion.split(spriteSheet_jump, 103, 134);
         jumpRightFrames = new TextureRegion[3];
         jumpLeftFrames = new TextureRegion[3];
+        // ------ Dash ------ //
+        spriteSheet_dash = new Texture("Personnage_Dash.png");
+        TextureRegion[][] tmp_attack = TextureRegion.split(spriteSheet_attack, 230, 134);
+        attackRightFrame = tmp_attack[0][0];
+        attackLeftFrame = tmp_attack[0][1];
+        // ------ Attaque ------ //
+        spriteSheet_attack = new Texture("Personnage_Attaque.png");
+        TextureRegion[][] tmp_dash = TextureRegion.split(spriteSheet_dash, 150, 134);
+        dashRightFrame = tmp_dash[0][0];
+        dashLeftFrame = tmp_dash[0][1];
 
         for (int i = 0; i < 3; i++) {
             jumpRightFrames[i] = tmp_jump[0][i];
@@ -132,63 +172,96 @@ public class Character {
         }
 
         walkRightAnimation = new Animation<>(
-            0.15f,
-            rightFrames
+                0.15f,
+                rightFrames
         );
 
         walkLeftAnimation = new Animation<>(
-            0.15f,
-            leftFrames
+                0.15f,
+                leftFrames
         );
 
         walkRightAnimation.setPlayMode(
-            Animation.PlayMode.LOOP
+                Animation.PlayMode.LOOP
         );
 
         walkLeftAnimation.setPlayMode(
-            Animation.PlayMode.LOOP
+                Animation.PlayMode.LOOP
         );
 
-        // Position initiale
+        // ------ Position initiale ------ //
         x = 300;
         y = 100;
-
-        // Vitesse
+        // ------ Vitesse ------ //
         speed = 200;
         runSpeed = 400;
-
-        // Physique
+        // ------ Physique ------ //
         verticalSpeed = 0;
         gravity = -3250;
         jumpForce = 1300;
-
-        // Sol
+        // ------ Sol ------ //
         onGround = false;
-
-        // Sauts
+        // ------ Sauts ------ //
         maxJumps = 1;
         jumpsLeft = maxJumps;
 
-        // HitBox
+        // ------ HitBox ------ //
         width = 85;
         height = 130;
     }
 
-    // ===========================================
-    //                  UPDATE
-    // ===========================================
+    // =========================================== \\
+    //                  UPDATE                     \\
+    // =========================================== \\
 
     public void update(float delta) {
 
-        // ===========================================
-        //             DEPLACEMENTS
-        // ===========================================
+        // =========================================== \\
+        //             COOLDOWN DU ATTAQUE                \\
+        // =========================================== \\
+
+        if (dashCooldownTimer > 0) {
+            dashCooldownTimer -= delta;
+            if (dashCooldownTimer < 0) {
+                dashCooldownTimer = 0;
+            }
+        }
+        if (attacking) {
+            attackTimer -= delta;
+            if (attackTimer <= 0) {
+                attackTimer = 0;
+                attacking = false;
+            }
+        }
+
+        
+
+        // =========================================== \\
+        //             COOLDOWN DU DASH                \\
+        // =========================================== \\
+
+        if (dashCooldownTimer > 0) {
+            dashCooldownTimer -= delta;
+            if (dashCooldownTimer < 0) {
+                dashCooldownTimer = 0;
+            }
+        }
+
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !dashing && !attacking) {
+            attacking = true;
+            attackTimer = attackDuration;
+            moving_left = false;
+            moving_right = false;
+        }
+
+        // =========================================== \\
+        //             DEPLACEMENTS                    \\
+        // =========================================== \\
 
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             moving_left = true;
             moving_right = false;
             facingRight = false;
-
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 x -= runSpeed * delta;
             } else {
@@ -202,7 +275,6 @@ public class Character {
             moving_right = true;
             moving_left = false;
             facingRight = true;
-
             if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)) {
                 x += runSpeed * delta;
             } else {
@@ -212,9 +284,12 @@ public class Character {
             moving_right = false;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !dashing) {
-            dashing = true;
+        // =========================================== \\
+        //                  DASH                       \\
+        // =========================================== \\
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !dashing && dashCooldownTimer <= 0) {
+            dashing = true;
             if (facingRight) {
                 dashEndX = x + 200;
             } else {
@@ -222,25 +297,31 @@ public class Character {
             }
         }
 
+        // =========================================== \\
+        //             DEPLACEMENT DU DASH             \\
+        // =========================================== \\
+
         if (dashing) {
-        
             if (facingRight) {
                 x += dashSpeed * delta;
-            
                 if (x >= dashEndX) {
                     x = dashEndX;
                     dashing = false;
+                    dashCooldownTimer = dashCooldown;
                 }
-            
             } else {
                 x -= dashSpeed * delta;
-            
                 if (x <= dashEndX) {
                     x = dashEndX;
                     dashing = false;
+                    dashCooldownTimer = dashCooldown;
                 }
             }
         }
+
+        // =========================================== \\
+        //             ANIMATION MARCHE                \\
+        // =========================================== \\
 
         if (moving_left || moving_right) {
             animationTime += delta;
@@ -248,39 +329,59 @@ public class Character {
             animationTime = 0;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpsLeft > 0) {
+        // =========================================== \\
+        //                  SAUT                       \\
+        // =========================================== \\
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.W)&& jumpsLeft > 0) {
             verticalSpeed = jumpForce;
             jumpsLeft--;
             onGround = false;
         }
 
+        // =========================================== \\
+        //                  QUITTER                    \\
+        // =========================================== \\
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.T)) {
             Gdx.app.exit();
         }
+
+        // =========================================== \\
+        //             DOUBLE JUMP TEST                \\
+        // =========================================== \\
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
             unlockDoubleJump();
         }
 
+        // =========================================== \\
+        //                GRAVITÉ                      \\
+        // =========================================== \\
+
         verticalSpeed += gravity * delta;
         y += verticalSpeed * delta;
+
+        // =========================================== \\
+        //              ATTERRISSAGE                   \\
+        // =========================================== \\
 
         if (landingAnimationTime > 0) {
             landingAnimationTime -= delta;
         }
     }
 
-    // ===========================================
-    //                  HITBOX
-    // ===========================================
+    // =========================================== \\
+    //                  HITBOX                     \\
+    // =========================================== \\
 
     public Rectangle getHitbox() {
-        return new Rectangle(x,y,width,height);
+        return new Rectangle(x, y, width, height);
     }
 
-    // ===========================================
-    //             VITESSE VERTICALE
-    // ===========================================
+    // =========================================== \\
+    //             VITESSE VERTICALE               \\
+    // =========================================== \\
 
     public float getVerticalSpeed() {
         return verticalSpeed;
@@ -290,113 +391,117 @@ public class Character {
         this.verticalSpeed = verticalSpeed;
     }
 
-    // ===========================================
-    //                  SOL
-    // ===========================================
+    // =========================================== \\
+    //                    SOL                      \\
+    // =========================================== \\
 
     public boolean isOnGround() {
         return onGround;
     }
 
     public void setOnGround(boolean onGround) {
-        // Détection de l'atterrissage
         if (onGround && !this.onGround) {
             landingAnimationTime = landingAnimationDuration;
         }
-
         this.onGround = onGround;
-
         if (onGround) {
             jumpsLeft = maxJumps;
         }
     }
 
-    // ===========================================
-    //                  RENDU
-    // ===========================================
+    // =========================================== \\
+    //                  RENDU                      \\
+    // =========================================== \\
 
     public void render(SpriteBatch batch) {
-        
         TextureRegion currentFrame;
-        
-        // ===========================================
-        //              ANIMATION DE SAUT
-        // ===========================================
-        
-        if (!onGround) {
+        if (dashing) {
             if (facingRight) {
-                // Montée
+                currentFrame = dashRightFrame;
+            } else {
+                currentFrame = dashLeftFrame;
+            }
+        } else if (attacking) {
+            if (facingRight) {
+                currentFrame = attackRightFrame;
+            } else {
+                currentFrame = attackLeftFrame;
+            }
+        }
+
+        // =========================================== \\
+        //              ANIMATION DE SAUT              \\
+        // =========================================== \\
+
+        else if (!onGround) {
+            if (facingRight) {
                 if (verticalSpeed > 0) {
                     currentFrame = jumpRightFrames[0];
                     this.width = 55;
                     this.height = 115;
-                // Descente
                 } else {
                     currentFrame = jumpRightFrames[1];
                     this.width = 55;
                     this.height = 115;
                 }
             } else {
-                // Montée
                 if (verticalSpeed > 0) {
                     currentFrame = jumpLeftFrames[0];
                     this.width = 55;
                     this.height = 115;
-                // Descente
                 } else {
                     currentFrame = jumpLeftFrames[1];
                     this.width = 55;
                     this.height = 115;
                 }
             }
-        
-        // ===========================================
-        //              ATTERRISSAGE
-        // ===========================================
-        
+
+        // =========================================== \\
+        //              ATTERRISSAGE                   \\
+        // =========================================== \\
+
         } else if (landingAnimationTime > 0) {
-        
             if (facingRight) {
                 currentFrame = jumpRightFrames[2];
             } else {
                 currentFrame = jumpLeftFrames[2];
             }
-        
-        // ===========================================
-        //              ANIMATION MARCHE
-        // ===========================================
-        
+
+        // =========================================== \\
+        //              ANIMATION MARCHE               \\
+        // =========================================== \\
+
         } else if (moving_right) {
             this.width = 55;
             this.height = 115;
             currentFrame = walkRightAnimation.getKeyFrame(animationTime);
-        
         } else if (moving_left) {
             this.width = 55;
             this.height = 115;
             currentFrame = walkLeftAnimation.getKeyFrame(animationTime);
-        
-        // ===========================================
-        //                  IDLE
-        // ===========================================
-        
+
+        // =========================================== \\
+        //                  IDLE                       \\
+        // =========================================== \\
+
         } else {
-        
             if (facingRight) {
                 currentFrame = walkRightAnimation.getKeyFrames()[1];
             } else {
                 currentFrame = walkLeftAnimation.getKeyFrames()[1];
             }
         }
-    
         batch.draw(currentFrame, x, y);
     }
 
-    // ===========================================
-    //                 DISPOSE
-    // ===========================================
+    // =========================================== \\
+    //                 DISPOSE                     \\
+    // =========================================== \\
 
     public void dispose() {
         spriteSheet_marche.dispose();
+        spriteSheet_jump.dispose();
+        spriteSheet_attack.dispose();
+        spriteSheet_dash.dispose();
     }
 }
