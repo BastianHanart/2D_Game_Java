@@ -16,10 +16,12 @@ public class Character {
 
     protected int life = 100;
     protected int damage = 1;
+    protected int range = 200;
     protected int luck = 0;
+    private boolean hasHit = false;
     protected float critical_rate = 0.0f;
     protected float critical_damage = 2;
-
+    private float attackTime = 0f;
     private float speed;
     private float runSpeed;
 
@@ -69,7 +71,7 @@ public class Character {
     private TextureRegion dashLeftFrame;
 
     private float landingAnimationTime = 0f;
-    private final float landingAnimationDuration = 0.1f;
+    private final float landingAnimationDuration = 0.2f;
     private float animationTime = 0f;
 
     // =========================================== \\
@@ -295,6 +297,17 @@ public class Character {
             } else {
                 dashEndX = x - 200;
             }
+            dashCooldownTimer = dashCooldown;
+        }
+
+        if (dashCooldownTimer > 0) {
+            dashCooldownTimer -= delta;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E) && !attacking) {
+            attacking = true;
+            hasHit = false;
+            attackTime = attackDuration;
         }
 
         // =========================================== \\
@@ -444,6 +457,7 @@ public class Character {
                     this.width = 55;
                     this.height = 115;
                 }
+
             } else {
                 if (verticalSpeed > 0) {
                     currentFrame = jumpLeftFrames[0];
@@ -472,10 +486,12 @@ public class Character {
         // =========================================== \\
 
         } else if (moving_right) {
+
             this.width = 55;
             this.height = 115;
             currentFrame = walkRightAnimation.getKeyFrame(animationTime);
         } else if (moving_left) {
+
             this.width = 55;
             this.height = 115;
             currentFrame = walkLeftAnimation.getKeyFrame(animationTime);
