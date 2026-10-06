@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -33,6 +34,8 @@ public class GameScreen implements Screen {
         shapeRenderer = new ShapeRenderer();
         character = new Character();
         level = LevelManager.loadLevel(1);
+        character.setX(50);
+        character.setY(800);
         level.getMusic().play();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -67,11 +70,11 @@ public class GameScreen implements Screen {
         // ------ Position de départ du joueur ------ //
         if (side == false){
             character.setX(50);
-            character.setY(200);
+            character.setY(800);
         }
         else{
             character.setX(level.getWidth() - 150);
-            character.setY(200);
+            character.setY(800);
         }
         level.getMusic().play();
     }
@@ -126,16 +129,16 @@ public class GameScreen implements Screen {
     //              RENDU MAP
     // ===========================================
 
-    private void renderTestMap() {
-        shapeRenderer.setProjectionMatrix(camera.combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        for (Platform platform : level.getPlatforms()) {
-            Rectangle rectangle = platform.getHitbox();
-            shapeRenderer.setColor(0.3f,0.3f,0.3f,1);
-            shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
-        }
-        shapeRenderer.end();
-    }
+    // private void renderTestMap() {
+    //     shapeRenderer.setProjectionMatrix(camera.combined);
+    //     shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+    //     for (Platform platform : level.getPlatforms()) {
+    //         Rectangle rectangle = platform.getHitbox();
+    //         shapeRenderer.setColor(0.3f,0.3f,0.3f,1);
+    //         shapeRenderer.rect(rectangle.x, rectangle.y, rectangle.width, rectangle.height);
+    //     }
+    //     shapeRenderer.end();
+    // }
 
     // ===========================================
     //                  RENDER
@@ -152,9 +155,10 @@ public class GameScreen implements Screen {
         updateCamera();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        batch.draw(level.getBackground(), -50, -50, level.getWidth(), level.getHeight());
+        for (Texture t : level.getLayers()) {
+            batch.draw(t, 0, 0, level.getWidth(), level.getHeight());
+        }
         batch.end();
-        renderTestMap();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         character.render(batch);
