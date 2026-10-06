@@ -18,7 +18,7 @@ public class LevelManager {
     }
 
     private static Level createLevel1() {
-        Level level = new Level(3000f, 1500f, "Music/Map1.mp3");
+        Level level = new Level(3000f, 1500f, "Music/Map1.mp3", "windrise-background-4k.png");
         // ------ Sol ------ //
         level.addPlatform(new Platform(0, 0, 3000, 100));
         // ------ Plateforme 1 ------ //
@@ -34,7 +34,7 @@ public class LevelManager {
     }
 
     private static Level createLevel2() {
-        Level level = new Level(4000, 1500, "Music/Map2.mp3");
+        Level level = new Level(4000, 1500, "Music/Map2.mp3", "windrise-background-4k.png");
         level.addPlatform(new Platform(0, 0, 4000, 100));
         level.addPlatform(new Platform(500, 300, 300, 50));
         level.addPlatform(new Platform(1200, 500, 300, 50));
@@ -42,7 +42,7 @@ public class LevelManager {
     }
 
     private static Level createLevel3() {
-        Level level = new Level(5000, 1500, "Music/Map3.mp3");
+        Level level = new Level(5000, 1500, "Music/Map3.mp3", "windrise-background-4k.png");
         level.addPlatform(new Platform(0, 0, 5000, 100));
         return level;
     }

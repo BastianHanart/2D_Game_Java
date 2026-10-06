@@ -90,16 +90,16 @@ public class GameScreen implements Screen {
         }
     }
 
-    private void checkAttackCollisions() {
+    // private void checkAttackCollisions() {
 
-        if (!character.isAttacking()) {
-            return;
-        }
+    //     if (!character.isAttacking()) {
+    //         return;
+    //     }
 
-        if (character.getAttackHitbox().overlaps(monster.getHitbox())) {
-            monster.takeDamage(character.getDamage());
-        }
-    }
+    //     if (character.getAttackHitbox().overlaps(monster.getHitbox())) {
+    //         monster.takeDamage(character.getDamage());
+    //     }
+    // }
 
     // ===========================================
     //                CAMERA
@@ -147,9 +147,13 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         character.update(delta);
         checkPlatformCollisions();
-        checkAttackCollisions();
+        // checkAttackCollisions();
         checkLevelChange();
         updateCamera();
+        batch.setProjectionMatrix(camera.combined);
+        batch.begin();
+        batch.draw(level.getBackground(), -50, -50, level.getWidth(), level.getHeight());
+        batch.end();
         renderTestMap();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();

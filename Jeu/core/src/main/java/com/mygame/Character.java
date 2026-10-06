@@ -146,13 +146,13 @@ public class Character {
         TextureRegion[][] tmp_jump = TextureRegion.split(spriteSheet_jump, 103, 134);
         jumpRightFrames = new TextureRegion[3];
         jumpLeftFrames = new TextureRegion[3];
-        // ------ Dash ------ //
-        spriteSheet_dash = new Texture("Personnage_Dash.png");
+                // ------ Attaque ------ //
+        spriteSheet_attack = new Texture("Personnage_Attaque.png");
         TextureRegion[][] tmp_attack = TextureRegion.split(spriteSheet_attack, 230, 134);
         attackRightFrame = tmp_attack[0][0];
         attackLeftFrame = tmp_attack[0][1];
-        // ------ Attaque ------ //
-        spriteSheet_attack = new Texture("Personnage_Attaque.png");
+        // ------ Dash ------ //
+        spriteSheet_dash = new Texture("Personnage_Dash.png");
         TextureRegion[][] tmp_dash = TextureRegion.split(spriteSheet_dash, 150, 134);
         dashRightFrame = tmp_dash[0][0];
         dashLeftFrame = tmp_dash[0][1];

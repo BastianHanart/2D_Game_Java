@@ -1,6 +1,7 @@
 package com.mygame;
 
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.utils.Array;
 
 public class Level {
@@ -8,8 +9,9 @@ public class Level {
     private float width;
     private float height;
     private Music music;
+    private Texture background;
 
-    public Level(float width, float height, String musicPath) {
+    public Level(float width, float height, String musicPath, String bgPath) {
         this.width = width;
         this.height = height;
         platforms = new Array<>();
@@ -18,6 +20,7 @@ public class Level {
         );
         music.setLooping(true);
         music.setVolume(0.5f);
+        background = new Texture(com.badlogic.gdx.Gdx.files.internal(bgPath)); 
     }
 
     public void addPlatform(Platform platform) {
@@ -40,7 +43,12 @@ public class Level {
         return music;
     }
 
+    public Texture getBackground() { 
+        return background; 
+    } 
+
     public void dispose() {
         music.dispose();
+        background.dispose();
     }
 }
