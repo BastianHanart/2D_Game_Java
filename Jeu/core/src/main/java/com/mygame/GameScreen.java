@@ -22,6 +22,8 @@ public class GameScreen implements Screen {
     private boolean side;
     private boolean TpAllowed = true;
     private Monster monster;
+    private static final float BACKGROUND_HEIGHT_FACTOR = 1.3f;
+    private static final float BACKGROUND_WIDTH_FACTOR = 1.2f;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -39,7 +41,7 @@ public class GameScreen implements Screen {
         level.getMusic().play();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        camera.position.set(character.getX(), character.getY(), 0);
+        camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
     }
 
@@ -112,7 +114,7 @@ public class GameScreen implements Screen {
         float halfWidth = camera.viewportWidth / 2f;
         float halfHeight = camera.viewportHeight / 2f;
         float targetX = character.getX();
-        float targetY = character.getY();
+        float targetY = character.getY() + camera.viewportHeight / 3f;
         // ------ Limites de la map ------ //
         targetX = Math.max(halfWidth, targetX);
         targetX = Math.min(level.getWidth() - halfWidth, targetX);
@@ -155,7 +157,9 @@ public class GameScreen implements Screen {
         updateCamera();
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
-        for (Texture t : level.getLayers()) {
+        renderBackground();
+        for (int i = 1; i < level.getLayers().size; i++) {
+            Texture t = level.getLayers().get(i);
             batch.draw(t, 0, 0, level.getWidth(), level.getHeight());
         }
         batch.end();
@@ -163,6 +167,41 @@ public class GameScreen implements Screen {
         batch.begin();
         character.render(batch);
         batch.end();
+    }
+
+
+    private void renderBackground() {
+        Texture background = level.getBackground();
+
+        float viewW = camera.viewportWidth;
+        float viewH = camera.viewportHeight;
+        float viewLeft = camera.position.x - viewW / 2f;
+        float viewBottom = camera.position.y - viewH / 2f;
+
+        // Fond plus grand que l'écran
+        float bgWidth = viewW * BACKGROUND_WIDTH_FACTOR;
+        float bgHeight = viewH * BACKGROUND_HEIGHT_FACTOR;
+        float extraX = bgWidth - viewW;
+        float extraY = bgHeight - viewH;
+
+        // Plage de déplacement de la caméra (la même que dans updateCamera)
+        float minX = viewW / 2f;
+        float maxX = level.getWidth() - viewW / 2f;
+        float minY = viewH / 2f;
+        float maxY = level.getHeight() - viewH / 2f;
+
+        // Progression : 0 = tout à gauche / en bas, 1 = tout à droite / en haut
+        float tx = (maxX > minX) ? (camera.position.x - minX) / (maxX - minX) : 0f;
+        float ty = (maxY > minY) ? (camera.position.y - minY) / (maxY - minY) : 0f;
+        tx = Math.max(0f, Math.min(1f, tx));
+        ty = Math.max(0f, Math.min(1f, ty));
+
+        // À gauche : le bord gauche du fond touche le bord gauche de l'écran.
+        // À droite : le bord droit du fond touche le bord droit de l'écran.
+        float bgX = viewLeft - tx * extraX;
+        float bgY = viewBottom - ty * extraY;
+
+        batch.draw(background, bgX, bgY, bgWidth, bgHeight);
     }
 
     @Override

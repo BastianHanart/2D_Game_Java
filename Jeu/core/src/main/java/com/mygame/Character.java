@@ -24,6 +24,7 @@ public class Character {
     private float attackTime = 0f;
     private float speed;
     private float runSpeed;
+    private float spriteScale = 1.5f;
 
     // =========================================== \\
     //              DEPLACEMENTS                   \\
@@ -195,8 +196,8 @@ public class Character {
         x = 300;
         y = 100;
         // ------ Vitesse ------ //
-        speed = 200;
-        runSpeed = 400;
+        speed = 400;
+        runSpeed = 800;
         // ------ Physique ------ //
         verticalSpeed = 0;
         gravity = -3250;
@@ -507,7 +508,7 @@ public class Character {
                 currentFrame = walkLeftAnimation.getKeyFrames()[1];
             }
         }
-        batch.draw(currentFrame, x, y);
+        batch.draw(currentFrame, x, y, currentFrame.getRegionWidth() * spriteScale, currentFrame.getRegionHeight() * spriteScale);
     }
 
     // =========================================== \\

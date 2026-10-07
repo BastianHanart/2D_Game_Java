@@ -47,6 +47,10 @@ public class Level {
         return music;
     }
 
+    public Texture getBackground() {
+        return layers.get(0);
+    }
+
     public Array<Texture> getLayers() { return layers; }
 
     public void dispose() {
