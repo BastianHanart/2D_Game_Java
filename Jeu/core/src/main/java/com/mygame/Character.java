@@ -461,7 +461,7 @@ public class Character {
 
             } else {
                 if (verticalSpeed > 0) {
-                    currentFrame = jumpLeftFrames[0];
+                    currentFrame = jumpLeftFrames[2];
                     this.width = 55;
                     this.height = 115;
                 } else {
@@ -479,7 +479,7 @@ public class Character {
             if (facingRight) {
                 currentFrame = jumpRightFrames[2];
             } else {
-                currentFrame = jumpLeftFrames[2];
+                currentFrame = jumpLeftFrames[0];
             }
 
         // =========================================== \\
