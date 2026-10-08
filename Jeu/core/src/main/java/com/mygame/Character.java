@@ -1,6 +1,9 @@
 package com.mygame;
 
 import com.badlogic.gdx.Gdx;
+
+import org.w3c.dom.events.MouseEvent;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -88,8 +91,8 @@ public class Character {
         }
         walkRight = new Animation<>(0.15f, rf);
         walkLeft = new Animation<>(0.15f, lf);
-        walkRight.setPlayMode(Animation.PlayMode.LOOP);
-        walkLeft.setPlayMode(Animation.PlayMode.LOOP);
+        walkRight.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
+        walkLeft.setPlayMode(Animation.PlayMode.LOOP_PINGPONG);
 
         sheetJump = new Texture("Personnage_Jump.png");
         TextureRegion[][] jump = TextureRegion.split(sheetJump, 103, 134);
@@ -188,6 +191,8 @@ public class Character {
 
         if (dashing) {
             dx = (facingRight ? DASH_SPEED : -DASH_SPEED) * delta;
+            body.vy = 0;
+
         }
         else if (!attacking) {
             if (left && !right) {
@@ -197,6 +202,18 @@ public class Character {
             } 
             else if (right && !left) {
                 dx = speed * delta;
+                facingRight = true;
+                movingRight = true;
+            }
+        }
+        else if (attacking) { 
+            if (left && !right) {
+                dx = (-speed * delta) / 1.5f;
+                facingRight = false;
+                movingLeft = true;
+            } 
+            else if (right && !left) {
+                dx = (speed * delta) / 1.5f;
                 facingRight = true;
                 movingRight = true;
             }

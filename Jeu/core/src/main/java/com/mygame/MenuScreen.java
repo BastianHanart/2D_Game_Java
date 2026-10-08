@@ -37,14 +37,87 @@ public class MenuScreen implements Screen {
         float button_Play_Y = 700;
         float button_Menu_Y = 450;
         float button_Exit_Y = 200;
-        batch.draw(playButton, buttonX, button_Play_Y, buttonWidth, buttonHeight);
-        batch.draw(menuButton, buttonX, button_Menu_Y, buttonWidth, buttonHeight);
-        batch.draw(exitButton, buttonX, button_Exit_Y, buttonWidth, buttonHeight);
+
+
+        // =========================================== \\
+        //                   Souris                    \\
+        // =========================================== \\
+        float mouseX = Gdx.input.getX();
+        float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+        // --- Multiplication taille du bouton quand la souris passe par dessus ---
+        float hoverScale = 1.10f;
+
+        // =========================================== \\
+        //                Bouton Play                  \\
+        // =========================================== \\
+        if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Play_Y && mouseY <= button_Play_Y + buttonHeight) {
+
+            // --- Nouvelle taille du bouton ---
+            float newWidth = buttonWidth * hoverScale;
+            float newHeight = buttonHeight * hoverScale;
+
+            // --- On "repositionne" pour éviter que le bouton ne se décale vers le bas à droite à cause de la multilication de sa taille ---
+            float newX = buttonX - (newWidth - buttonWidth) / 2;
+            float newY = button_Play_Y - (newHeight - buttonHeight) / 2;
+
+            // --- On dessine le bouton ---
+            batch.draw(playButton, newX, newY, newWidth, newHeight);
+        } 
+        else
+            batch.draw(playButton, buttonX, button_Play_Y, buttonWidth, buttonHeight);
+
+        // =========================================== \\
+        //                Bouton Menu                  \\
+        // =========================================== \\
+        if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Menu_Y && mouseY <= button_Menu_Y + buttonHeight) {
+
+             // --- Nouvelle taille du bouton ---
+            float newWidth = buttonWidth * hoverScale;
+            float newHeight = buttonHeight * hoverScale;
+
+            // --- On "repositionne" pour éviter que le bouton ne se décale vers le bas à droite à cause de la multilication de sa taille ---
+            float newX = buttonX - (newWidth - buttonWidth) / 2;
+            float newY = button_Menu_Y - (newHeight - buttonHeight) / 2;
+
+            // --- On dessine le bouton ---
+            batch.draw(playButton, newX, newY, newWidth, newHeight);
+        } 
+        else
+            batch.draw(menuButton, buttonX, button_Menu_Y, buttonWidth, buttonHeight);
+
+        // =========================================== \\
+        //                Bouton Exit                  \\
+        // =========================================== \\
+        if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Exit_Y && mouseY <= button_Exit_Y + buttonHeight) {
+
+            // --- Nouvelle taille du bouton ---
+            float newWidth = buttonWidth * hoverScale;
+            float newHeight = buttonHeight * hoverScale;
+
+            // --- On "repositionne" pour éviter que le bouton ne se décale vers le bas à droite à cause de la multilication de sa taille ---
+            float newX = buttonX - (newWidth - buttonWidth) / 2;
+            float newY = button_Exit_Y - (newHeight - buttonHeight) / 2;
+
+            // --- On dessine le bouton ---
+            batch.draw(playButton, newX, newY, newWidth, newHeight);
+        } 
+        else
+            batch.draw(exitButton, buttonX, button_Exit_Y, buttonWidth, buttonHeight);
         batch.end();
 
+        // =========================================== \\
+        //               Appuie Bouton                 \\
+        // =========================================== \\
+
+        // --- Si il y a eu un clic sur la page ---
         if (Gdx.input.justTouched()) {
-            float mouseX = Gdx.input.getX();
-            float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            // --- On récupère la position du clic ---
+            mouseX = Gdx.input.getX();
+            mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
+
+            // --- Si le clic se trouve sur l'un des boutons, alors on fait l'action du dit-bouton ---            
             if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Play_Y && mouseY <= button_Play_Y + buttonHeight) {
                 game.setScreen(new GameScreen(game));
             }
