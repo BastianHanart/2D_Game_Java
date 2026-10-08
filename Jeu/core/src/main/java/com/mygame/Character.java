@@ -1,6 +1,7 @@
 package com.mygame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,7 +10,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Character {
-
+        
+    private Game game;
     // ===========================================
     //                 STATS
     // ===========================================
@@ -74,7 +76,8 @@ public class Character {
     //              CONSTRUCTEUR                   \\
     // =========================================== \\
 
-    public Character() {
+    public Character(Game game) {
+        this.game = game;
         sheetWalk = new Texture("Personnage_Marche.png");
         TextureRegion[][] walk = TextureRegion.split(sheetWalk, 100, 134);
         TextureRegion[] rf = new TextureRegion[3];
@@ -167,7 +170,8 @@ public class Character {
             maxJumps = doubleJumpUnlocked ? 2 : 1;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.T)) Gdx.app.exit();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.T)) 
+            game.setScreen(new MenuScreen(game));
         
         // =========================================== \\
         //                 DEPLACEMENT                 \\

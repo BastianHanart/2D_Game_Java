@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         batch = new SpriteBatch();
-        character = new Character();
+        character = new Character(game);
         level = LevelManager.loadLevel(currentLevel);
         character.setPosition(50, 800);
         level.getMusic().play();
