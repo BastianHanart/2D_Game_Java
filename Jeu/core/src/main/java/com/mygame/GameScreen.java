@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel);
-        character.setPosition(50, 800);
+        character.setPosition(150, 700);
         level.getMusic().play();
 
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());

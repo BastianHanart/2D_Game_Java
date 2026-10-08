@@ -12,12 +12,16 @@ public class MenuScreen implements Screen {
     private SpriteBatch batch;
     private Texture background;
     private Texture playButton;
+    private Texture menuButton;
+    private Texture exitButton;
 
     public MenuScreen(Game game) {
         this.game = game;
         batch = new SpriteBatch();
         background = new Texture("MenuBackground.png");
-        playButton = new Texture("BoutonPlay.jpeg");
+        playButton = new Texture("BoutonPlay.png");
+        menuButton = new Texture("BoutonMenu.png");
+        exitButton = new Texture("BoutonExit.png");
     }
 
     @Override
@@ -27,18 +31,25 @@ public class MenuScreen implements Screen {
 
         batch.begin();
         batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        float buttonWidth = 250;
-        float buttonHeight = 100;
+        float buttonWidth = 450;
+        float buttonHeight = 200;
         float buttonX = (Gdx.graphics.getWidth() - buttonWidth) / 2;
-        float buttonY = 850;
-        batch.draw(playButton, buttonX, buttonY, buttonWidth, buttonHeight);
+        float button_Play_Y = 700;
+        float button_Menu_Y = 450;
+        float button_Exit_Y = 200;
+        batch.draw(playButton, buttonX, button_Play_Y, buttonWidth, buttonHeight);
+        batch.draw(menuButton, buttonX, button_Menu_Y, buttonWidth, buttonHeight);
+        batch.draw(exitButton, buttonX, button_Exit_Y, buttonWidth, buttonHeight);
         batch.end();
 
         if (Gdx.input.justTouched()) {
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.graphics.getHeight() - Gdx.input.getY();
-            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= buttonY && mouseY <= buttonY + buttonHeight) {
+            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Play_Y && mouseY <= button_Play_Y + buttonHeight) {
                 game.setScreen(new GameScreen(game));
+            }
+            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Exit_Y && mouseY <= button_Exit_Y + buttonHeight) {
+                Gdx.app.exit();
             }
         }
     }
