@@ -26,15 +26,16 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(null);
         batch = new SpriteBatch();
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel);
         character.setPosition(150, 700);
         level.getMusic().play();
-
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
+        
     }
 
     // ===========================================
