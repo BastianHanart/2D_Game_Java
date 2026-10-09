@@ -124,6 +124,9 @@ public class MenuScreen implements Screen {
             if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Exit_Y && mouseY <= button_Exit_Y + buttonHeight) {
                 Gdx.app.exit();
             }
+            if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Menu_Y && mouseY <= button_Menu_Y + buttonHeight) {
+                game.setScreen(new SettingsScreen(game));
+            }
         }
     }
     @Override
@@ -133,7 +136,10 @@ public class MenuScreen implements Screen {
         playButton.dispose();
     }
 
-    @Override public void show() {}
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(null);
+    }
     @Override public void resize(int width, int height) {}
     @Override public void pause() {}
     @Override public void resume() {}

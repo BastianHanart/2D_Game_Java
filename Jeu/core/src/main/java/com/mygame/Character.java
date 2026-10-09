@@ -155,14 +155,13 @@ public class Character {
         }
 
         // --- Actions ---
-        boolean attackPressed = Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)
-                || Gdx.input.isKeyJustPressed(Input.Keys.E);
+        boolean attackPressed = Gdx.input.isKeyJustPressed(Settings.attackKey);
         if (attackPressed && !attacking && !dashing) {
             attacking = true;
             attackTimer = ATTACK_DURATION;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !dashing && dashCooldownTimer <= 0f) {
+        if (Gdx.input.isKeyJustPressed(Settings.dashKey) && !dashing && dashCooldownTimer <= 0f) {
             dashing = true;
             dashTimer = DASH_DURATION;
             dashCooldownTimer = DASH_COOLDOWN;
@@ -173,16 +172,17 @@ public class Character {
             maxJumps = doubleJumpUnlocked ? 2 : 1;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.T)) 
+        if (Gdx.input.isKeyJustPressed(Settings.menuKey)) {
             game.setScreen(new MenuScreen(game));
+        }
         
         // =========================================== \\
         //                 DEPLACEMENT                 \\
         // =========================================== \\
 
-        boolean left = Gdx.input.isKeyPressed(Input.Keys.A);
-        boolean right = Gdx.input.isKeyPressed(Input.Keys.D);
-        boolean run = Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT);
+        boolean left = Gdx.input.isKeyPressed(Settings.leftKey);
+        boolean right = Gdx.input.isKeyPressed(Settings.rightKey);
+        boolean run = Gdx.input.isKeyPressed(Settings.runKey);
         float speed = run ? RUN_SPEED : WALK_SPEED;
 
         float dx = 0f;
@@ -220,7 +220,7 @@ public class Character {
         }
 
         // --- Saut ---
-        if (Gdx.input.isKeyJustPressed(Input.Keys.W) && jumpsLeft > 0) {
+        if (Gdx.input.isKeyJustPressed(Settings.jumpKey) && jumpsLeft > 0) {
             body.jump(JUMP_FORCE);
             jumpsLeft--;
         }
