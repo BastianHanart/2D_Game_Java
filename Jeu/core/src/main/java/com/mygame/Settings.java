@@ -15,6 +15,8 @@ public class Settings {
 
     public static int jumpKey = Input.Keys.W;
 
+    public static int downKey = Input.Keys.S;
+
     public static int dashKey = Input.Keys.SPACE;
 
     public static int attackKey = Input.Keys.E;

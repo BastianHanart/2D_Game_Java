@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 public class GameScreen implements Screen {
 
@@ -19,6 +18,7 @@ public class GameScreen implements Screen {
     private int currentLevel = 1;
     private static final float BACKGROUND_HEIGHT_FACTOR = 1.3f;
     private static final float BACKGROUND_WIDTH_FACTOR = 1.2f;
+    private HealthBar healthBar;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
         batch = new SpriteBatch();
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel);
+        healthBar = new HealthBar();
         character.setPosition(150, 700);
         level.getMusic().play();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -112,6 +113,13 @@ public class GameScreen implements Screen {
             batch.draw(t, 0, 0, level.getWidth(), level.getHeight());
         }
         character.render(batch);
+        float viewLeft = camera.position.x - camera.viewportWidth / 2f;
+        float viewTop = camera.position.y + camera.viewportHeight / 2f;
+        float margeX = 20;
+        float margeY = 20;
+        float posX = viewLeft + margeX;
+        float posY = viewTop - margeY - healthBar.getHeightHealthBar();
+        healthBar.draw(batch, posX, posY, character.getHP(), character.getHPMax());
         batch.end();
     }
 
@@ -157,7 +165,6 @@ public class GameScreen implements Screen {
 
     }
     @Override public void hide() {
-
     }
 
     @Override
@@ -165,5 +172,6 @@ public class GameScreen implements Screen {
         batch.dispose();
         character.dispose();
         level.dispose();
+        healthBar.dispose(); 
     }
 }

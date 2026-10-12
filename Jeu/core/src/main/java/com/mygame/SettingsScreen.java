@@ -9,24 +9,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SettingsScreen implements Screen {
@@ -166,6 +157,7 @@ public class SettingsScreen implements Screen {
 
         panel.add(createKeyRow("GAUCHE",Settings.leftKey,"left")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("DROITE",Settings.rightKey,"right")).width(600).height(70).padBottom(10).row();
+        panel.add(createKeyRow("TOMBER",Settings.downKey,"down")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("SAUT",Settings.jumpKey,"jump")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("DASH",Settings.dashKey,"dash")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("ATTAQUE",Settings.attackKey,"attack")).width(600).height(70).padBottom(10).row();
