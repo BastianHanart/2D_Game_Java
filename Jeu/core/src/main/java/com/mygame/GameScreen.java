@@ -7,18 +7,21 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
 public class GameScreen implements Screen {
 
     private Game game;
     private SpriteBatch batch;
     private Character character;
+    private Array<Monster> monsters;
     private OrthographicCamera camera;
     private Level level;
     private int currentLevel = 1;
     private static final float BACKGROUND_HEIGHT_FACTOR = 1.3f;
     private static final float BACKGROUND_WIDTH_FACTOR = 1.2f;
     private HealthBar healthBar;
+    private boolean playerAttackHit = false;
 
     public GameScreen(Game game) {
         this.game = game;
@@ -29,13 +32,14 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(null);
         batch = new SpriteBatch();
         character = new Character(game);
-        level = LevelManager.loadLevel(currentLevel);
+        level = LevelManager.loadLevel(currentLevel, game);
         healthBar = new HealthBar();
         character.setPosition(150, 700);
         level.getMusic().play();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
+        monsters = level.getMonsters();
         
     }
 
@@ -46,7 +50,7 @@ public class GameScreen implements Screen {
     private void changeLevel(int levelNumber, boolean enterFromRight) {
         level.getMusic().stop();
         level.dispose();
-        level = LevelManager.loadLevel(levelNumber);
+        level = LevelManager.loadLevel(levelNumber, game);
 
         float startX = enterFromRight ? level.getWidth() - 150 : 50;
         character.setPosition(startX, 800);
@@ -98,7 +102,34 @@ public class GameScreen implements Screen {
         // Evite les gros sauts de physique si une frame est très longue
         delta = Math.min(delta, 1 / 30f);
 
-        character.update(delta, level.getCollision());
+        if (!character.isDead()) {
+            character.update(delta, level.getCollision());
+        }
+
+        else {
+            game.setScreen(new MenuScreen(game));
+        }
+
+        if (!character.isAttacking()) {
+            playerAttackHit = false;
+        }
+
+        for (Monster monster : monsters) {
+            if (!monster.isDead()
+                    && character.isAttacking()
+                    && !playerAttackHit
+                    && character.getAttackBox().overlaps(monster.getHitbox())) {
+
+                monster.takeDamage(character.getDamage());
+                playerAttackHit = true;
+            }
+        }
+
+        for (Monster monster : monsters) {
+            if (!monster.isDead() && monster instanceof Squelette) {
+                ((Squelette) monster).update(delta, level.getCollision(), character);
+            }
+        }
         checkLevelChange();
         updateCamera();
 
@@ -120,6 +151,11 @@ public class GameScreen implements Screen {
         float posX = viewLeft + margeX;
         float posY = viewTop - margeY - healthBar.getHeightHealthBar();
         healthBar.draw(batch, posX, posY, character.getHP(), character.getHPMax());
+        for (Monster monster : monsters) {
+            if (!monster.isDead() && monster instanceof Squelette) {
+                ((Squelette) monster).render(batch);
+            }
+        }
         batch.end();
     }
 
@@ -171,7 +207,11 @@ public class GameScreen implements Screen {
     public void dispose() {
         batch.dispose();
         character.dispose();
+        for (Monster monster : monsters) {
+            if (monster instanceof Squelette) {
+                ((Squelette) monster).dispose();
+            }
+        }
         level.dispose();
-        healthBar.dispose(); 
     }
 }

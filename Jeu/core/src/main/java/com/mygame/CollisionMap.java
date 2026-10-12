@@ -90,4 +90,11 @@ public class CollisionMap {
     public boolean isSolid(float wx, float wy) {
         return tileAt((int) Math.floor(wx / cell), (int) Math.floor((height - wy) / cell)) == SOLID;
     }
+
+    public float clampX(float x, float halfW) {
+        float minX = halfW;
+        float maxX = cols * cell - halfW;
+
+        return MathUtils.clamp(x, minX, maxX);
+    }
 }

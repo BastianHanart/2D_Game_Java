@@ -18,7 +18,7 @@ public class Character {
 
     protected float HPMax = 100;
     protected float HP = 100;
-    protected int damage = 1;
+    protected int damage = 5;
     protected int range = 200;
 
     public float getHPMax() { 
@@ -140,6 +140,10 @@ public class Character {
         body.vy = 0;
     }
 
+    public boolean isDead() {
+        return HP <= 0;
+    }
+
     // =========================================== \\
     //                  UPDATE                     \\
     // =========================================== \\
@@ -168,8 +172,10 @@ public class Character {
         }
 
         // --- Actions ---
-        boolean attackPressed = Gdx.input.isKeyJustPressed(Settings.attackKey);
-        if (attackPressed && !attacking && !dashing) {
+        boolean attackPressed = Gdx.input.isButtonJustPressed(Input.Buttons.LEFT);
+        boolean second_attackPressed = Gdx.input.isKeyJustPressed(Settings.second_attackKey);
+        
+        if ((attackPressed || second_attackPressed) && !attacking && !dashing) {
             attacking = true;
             attackTimer = ATTACK_DURATION;
         }
@@ -272,7 +278,9 @@ public class Character {
     // =========================================== \\
 
     /** Zone où le personnage peut recevoir des dégâts. */
-    public Rectangle getHurtbox() { return body.rect(); }
+    public Rectangle getHurtbox() { 
+        return body.rect(); 
+    }
 
     /** Zone qui blesse les monstres (seulement pendant l'attaque). */
     public Rectangle getAttackBox() {
@@ -280,8 +288,21 @@ public class Character {
         return new Rectangle(ax, body.y + 20f, range, body.h - 40f);
     }
 
-    public boolean isAttacking() { return attacking; }
-    public int getDamage() { return damage; }
+    public boolean isAttacking() { 
+        return attacking; 
+    }
+    public int getDamage() {
+        return damage; 
+    }
+
+    public void takeDamage(int damage) {
+        this.HP -= damage;
+
+        if (this.HP < 0) {
+            this.HP = 0;
+        }
+        System.out.println("Joueur touché ! Vie restante : " + this.HP);
+    }
 
     // =========================================== \\
     //                  RENDU                      \\

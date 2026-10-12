@@ -19,7 +19,7 @@ public class Settings {
 
     public static int dashKey = Input.Keys.SPACE;
 
-    public static int attackKey = Input.Keys.E;
+    public static int second_attackKey = Input.Keys.E;
 
     public static int menuKey = Input.Keys.ESCAPE;
 

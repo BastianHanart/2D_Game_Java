@@ -81,7 +81,7 @@ public class MenuScreen implements Screen {
             float newY = button_Menu_Y - (newHeight - buttonHeight) / 2;
 
             // --- On dessine le bouton ---
-            batch.draw(playButton, newX, newY, newWidth, newHeight);
+            batch.draw(menuButton, newX, newY, newWidth, newHeight);
         } 
         else
             batch.draw(menuButton, buttonX, button_Menu_Y, buttonWidth, buttonHeight);
@@ -100,7 +100,7 @@ public class MenuScreen implements Screen {
             float newY = button_Exit_Y - (newHeight - buttonHeight) / 2;
 
             // --- On dessine le bouton ---
-            batch.draw(playButton, newX, newY, newWidth, newHeight);
+            batch.draw(exitButton, newX, newY, newWidth, newHeight);
         } 
         else
             batch.draw(exitButton, buttonX, button_Exit_Y, buttonWidth, buttonHeight);

@@ -160,7 +160,7 @@ public class SettingsScreen implements Screen {
         panel.add(createKeyRow("TOMBER",Settings.downKey,"down")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("SAUT",Settings.jumpKey,"jump")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("DASH",Settings.dashKey,"dash")).width(600).height(70).padBottom(10).row();
-        panel.add(createKeyRow("ATTAQUE",Settings.attackKey,"attack")).width(600).height(70).padBottom(10).row();
+        panel.add(createKeyRow("ATTAQUE",Settings.second_attackKey,"attack")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("MENU",Settings.menuKey,"menu")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("COURSE",Settings.runKey,"run")).width(600).height(70).padBottom(30).row();
 
@@ -435,7 +435,7 @@ public class SettingsScreen implements Screen {
                 else if (
                     keyToChange.equals("attack")
                 ) {
-                    Settings.attackKey = key;
+                    Settings.second_attackKey = key;
                 }
 
                 // ---------------------------------------------

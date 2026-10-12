@@ -1,24 +1,24 @@
 package com.mygame;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Monster {
 
-    private float x;
-    private float y;
+    protected final Body body = new Body();
 
-    private int width = 55;
-    private int height = 115;
+    private int life;
+    private Game game;
 
-    private int life = 10;
-
-    public Monster(float x, float y) {
-        this.x = x;
-        this.y = y;
+    public Monster(Game game, int life) {
+        this.game = game;
+        this.life = life;
     }
 
     public Rectangle getHitbox() {
-        return new Rectangle(x, y, width, height);
+        return body.rect();
     }
 
     public void takeDamage(int damage) {
@@ -27,8 +27,6 @@ public class Monster {
         if (life < 0) {
             life = 0;
         }
-
-        System.out.println("Monster touché ! Vie restante : " + life);
     }
 
     public boolean isDead() {
@@ -36,14 +34,21 @@ public class Monster {
     }
 
     public float getX() {
-        return x;
+        return body.x;
     }
 
     public float getY() {
-        return y;
+        return body.y;
     }
 
     public int getLife() {
         return life;
+    }
+
+    public void setPosition(float x, float y) {
+        body.x = x;
+        body.y = y;
+        body.vy = 0;
+        body.onGround = false;
     }
 }

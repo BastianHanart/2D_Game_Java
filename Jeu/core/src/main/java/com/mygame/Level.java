@@ -10,6 +10,7 @@ public class Level {
     private final Music music;
     private final Array<Texture> layers = new Array<>();
     private CollisionMap collision;
+    private final Array<Monster> monsters = new Array<>();
 
     public Level(float width, float height, String musicPath, String... layerPaths) {
         this.width = width;
@@ -22,6 +23,14 @@ public class Level {
             t.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
             layers.add(t);
         }
+    }
+
+    public Array<Monster> getMonsters() {
+        return monsters;
+    }
+
+    public void addMonster(Monster monster) {
+        monsters.add(monster);
     }
 
     public void setCollision(CollisionMap collision) { 
