@@ -1,9 +1,6 @@
 package com.mygame;
 
 import com.badlogic.gdx.Gdx;
-
-import org.w3c.dom.events.MouseEvent;
-
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,9 +16,17 @@ public class Character {
     //                 STATS
     // ===========================================
 
-    protected int life = 100;
+    protected float HPMax = 100;
+    protected float HP = 100;
     protected int damage = 1;
     protected int range = 200;
+
+    public float getHPMax() { 
+        return this.HPMax; 
+    }
+    public float getHP() { 
+        return this.HP; 
+    }
 
     // ---------- Constantes ----------
     private static final float WALK_SPEED = 400f;
@@ -141,6 +146,14 @@ public class Character {
 
     public void update(float delta, CollisionMap map) {
 
+        if (this.HP > this.HPMax){
+            this.HP = 100;
+        }
+
+        if (this.HP < 0){
+            this.HP = 0;
+        }
+
         // --- Timers ---
         dashCooldownTimer = Math.max(0f, dashCooldownTimer - delta);
         landingTimer = Math.max(0f, landingTimer - delta);
@@ -171,6 +184,15 @@ public class Character {
             doubleJumpUnlocked = !doubleJumpUnlocked;
             maxJumps = doubleJumpUnlocked ? 2 : 1;
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
+            this.HP -= 10;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
+            this.HP += 10;
+        }
+
 
         if (Gdx.input.isKeyJustPressed(Settings.menuKey)) {
             game.setScreen(new MenuScreen(game));
@@ -233,7 +255,7 @@ public class Character {
 
         // --- Physique (murs, sol, pentes, plateformes) ---
         boolean wasOnGround = body.onGround;
-        body.move(map, dx, delta, Gdx.input.isKeyPressed(Input.Keys.S));
+        body.move(map, dx, delta, Gdx.input.isKeyPressed(Settings.downKey));
 
         if (body.onGround) {
             jumpsLeft = maxJumps;
