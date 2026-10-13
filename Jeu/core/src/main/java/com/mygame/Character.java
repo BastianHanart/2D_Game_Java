@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class Character {
         
     private Game game;
+    private SkillTree skills = GameState.Skills;
     // ===========================================
     //                 STATS
     // ===========================================
@@ -57,7 +58,6 @@ public class Character {
 
     private int maxJumps = 1;
     private int jumpsLeft = 1;
-    private boolean doubleJumpUnlocked = false;
 
     private float landingTimer;
     private float animationTime;
@@ -118,6 +118,9 @@ public class Character {
 
         body.w = BODY_W;
         body.h = BODY_H;
+
+        recalculerStats();
+        HP = HPMax;  
     }
 
     // =========================================== \\
@@ -144,6 +147,12 @@ public class Character {
         return HP <= 0;
     }
 
+    public void recalculerStats() {
+        HPMax  = 100 + (skills.has(Talent.HPMax_1) ? 10 : 0) + (skills.has(Talent.HPMax_2) ? 20 : 0) + (skills.has(Talent.HPMax_3) ? 30 : 0) + (skills.has(Talent.HPMax_4) ? 40 : 0) + (skills.has(Talent.HPMax_5) ? 50 : 0);
+        damage = 5 + (skills.has(Talent.Damage_1) ? 3 : 0) + (skills.has(Talent.Damage_2) ? 5 : 0) + (skills.has(Talent.Damage_3) ? 10 : 0) + (skills.has(Talent.Damage_4) ? 15 : 0) + (skills.has(Talent.Damage_5) ? 20 : 0);
+        maxJumps = skills.has(Talent.DoubleJump) ? 2 : 1;
+    }
+
     // =========================================== \\
     //                  UPDATE                     \\
     // =========================================== \\
@@ -151,9 +160,8 @@ public class Character {
     public void update(float delta, CollisionMap map) {
 
         if (this.HP > this.HPMax){
-            this.HP = 100;
+            this.HP = this.HPMax;
         }
-
         if (this.HP < 0){
             this.HP = 0;
         }
@@ -180,15 +188,10 @@ public class Character {
             attackTimer = ATTACK_DURATION;
         }
 
-        if (Gdx.input.isKeyJustPressed(Settings.dashKey) && !dashing && dashCooldownTimer <= 0f) {
+        if (skills.has(Talent.Dash) && Gdx.input.isKeyJustPressed(Settings.dashKey) && !dashing && dashCooldownTimer <= 0f){
             dashing = true;
             dashTimer = DASH_DURATION;
             dashCooldownTimer = DASH_COOLDOWN;
-        }
-
-        if (Gdx.input.isKeyJustPressed(Input.Keys.F)) {
-            doubleJumpUnlocked = !doubleJumpUnlocked;
-            maxJumps = doubleJumpUnlocked ? 2 : 1;
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
@@ -202,6 +205,11 @@ public class Character {
 
         if (Gdx.input.isKeyJustPressed(Settings.menuKey)) {
             game.setScreen(new MenuScreen(game));
+        }
+
+        if (Gdx.input.isKeyJustPressed(Settings.TalentTree)) {
+            game.setScreen(new SkillTreeScreen(game, game.getScreen()));
+            return;
         }
         
         // =========================================== \\
