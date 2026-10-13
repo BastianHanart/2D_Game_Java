@@ -23,6 +23,8 @@ public class Settings {
 
     public static int menuKey = Input.Keys.ESCAPE;
 
+    public static int TalentTree = Input.Keys.M;
+
     public static int runKey = Input.Keys.SHIFT_LEFT;
 
     // =====================================================

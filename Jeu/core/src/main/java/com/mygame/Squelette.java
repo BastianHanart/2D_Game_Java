@@ -37,7 +37,7 @@ public class Squelette extends Monster {
     private int idleDirection = 1;
 
     public Squelette(Game game) {
-        super(game, 10);
+        super(game, 10, 10);
 
         sheetWalk = new Texture("Monstres.png");
 

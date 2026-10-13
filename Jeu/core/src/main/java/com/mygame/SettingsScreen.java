@@ -162,6 +162,7 @@ public class SettingsScreen implements Screen {
         panel.add(createKeyRow("DASH",Settings.dashKey,"dash")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("ATTAQUE",Settings.second_attackKey,"attack")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("MENU",Settings.menuKey,"menu")).width(600).height(70).padBottom(10).row();
+        panel.add(createKeyRow("ARBRE DE TALENT",Settings.TalentTree,"TalentTree")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("COURSE",Settings.runKey,"run")).width(600).height(70).padBottom(30).row();
 
         // =====================================================

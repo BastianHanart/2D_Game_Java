@@ -122,6 +122,12 @@ public class GameScreen implements Screen {
 
                 monster.takeDamage(character.getDamage());
                 playerAttackHit = true;
+                if (monster.isDead()) {
+                    boolean niveauGagne = GameState.addXp(monster.getXPReward());
+                    if (niveauGagne) {
+                        character.recalculerStats();
+                    }
+                }
             }
         }
 

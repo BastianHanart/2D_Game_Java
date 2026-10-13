@@ -11,8 +11,10 @@ public class Monster {
 
     private int life;
     private Game game;
+    protected int XPReward = 10;
 
-    public Monster(Game game, int life) {
+    public Monster(Game game, int life, int XP) {
+        this.XPReward = XP;
         this.game = game;
         this.life = life;
     }
@@ -43,6 +45,10 @@ public class Monster {
 
     public int getLife() {
         return life;
+    }
+
+    public int getXPReward() {
+        return XPReward;
     }
 
     public void setPosition(float x, float y) {
