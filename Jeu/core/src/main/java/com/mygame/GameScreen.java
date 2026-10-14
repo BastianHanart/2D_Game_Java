@@ -40,7 +40,6 @@ public class GameScreen implements Screen {
         camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
         monsters = level.getMonsters();
-        
     }
 
     // ===========================================

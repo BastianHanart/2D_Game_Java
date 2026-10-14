@@ -11,7 +11,7 @@ public class SkillTree {
     }
 
     public void addPoints(int n) {
-        points += n; 
+        points += n;
     }
 
     public boolean has(Talent t) {
@@ -19,11 +19,24 @@ public class SkillTree {
     }
 
     public boolean canUnlock(Talent t) {
-        return !has(t) && points >= t.cost && (t.prerequisite == null || has(t.prerequisite));
+        if (has(t) || points < t.cost) {
+            return false;
+        }
+
+        for (Talent prerequisite : t.prerequisite) {
+            if (!has(prerequisite)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public boolean unlock(Talent t) {
-        if (!canUnlock(t)) return false;
+        if (!canUnlock(t)) {
+            return false;
+        }
+
         points -= t.cost;
         unlocked.add(t);
         return true;
