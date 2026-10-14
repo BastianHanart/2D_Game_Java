@@ -52,8 +52,9 @@ public class GameScreen implements Screen {
         level.dispose();
         level = LevelManager.loadLevel(levelNumber, game);
 
-        float startX = enterFromRight ? level.getWidth() - 150 : 50;
-        character.setPosition(startX, 800);
+        float startX = enterFromRight ? level.getWidth() - 150 : 100;
+        float startY = enterFromRight ? 1000 : 800;
+        character.setPosition(startX, startY);
         level.getMusic().play();
     }
 
@@ -61,11 +62,11 @@ public class GameScreen implements Screen {
         Body body = character.getBody();
 
         if (body.x + body.w / 2f >= level.getWidth()) {
-            currentLevel++;
+            currentLevel = currentLevel + 1;
             changeLevel(currentLevel, false);
         } else if (body.x - body.w / 2f <= 0) {
             if (currentLevel > 1) {
-                currentLevel--;
+                currentLevel = currentLevel - 1;
                 changeLevel(currentLevel, true);
             } else {
                 body.x = body.w / 2f;   // mur invisible au bord du niveau 1
@@ -135,6 +136,9 @@ public class GameScreen implements Screen {
             if (!monster.isDead() && monster instanceof Squelette) {
                 ((Squelette) monster).update(delta, level.getCollision(), character);
             }
+            if (!monster.isDead() && monster instanceof Fantome) {
+                ((Fantome) monster).update(delta, level.getCollision(), character);
+            }
         }
         checkLevelChange();
         updateCamera();
@@ -160,6 +164,9 @@ public class GameScreen implements Screen {
         for (Monster monster : monsters) {
             if (!monster.isDead() && monster instanceof Squelette) {
                 ((Squelette) monster).render(batch);
+            }
+            else if (!monster.isDead() && monster instanceof Fantome) {
+                ((Fantome) monster).render(batch);
             }
         }
         batch.end();
@@ -216,6 +223,9 @@ public class GameScreen implements Screen {
         for (Monster monster : monsters) {
             if (monster instanceof Squelette) {
                 ((Squelette) monster).dispose();
+            }
+            if (monster instanceof Fantome) {
+                ((Fantome) monster).dispose();
             }
         }
         level.dispose();
