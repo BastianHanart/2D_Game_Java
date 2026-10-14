@@ -149,7 +149,7 @@ public class Character {
 
     public void recalculerStats() {
         HPMax  = 100 + (skills.has(Talent.HPMax_1) ? 10 : 0) + (skills.has(Talent.HPMax_2) ? 20 : 0) + (skills.has(Talent.HPMax_3) ? 30 : 0) + (skills.has(Talent.HPMax_4) ? 40 : 0) + (skills.has(Talent.HPMax_5) ? 50 : 0);
-        damage = 5 + (skills.has(Talent.Damage_1) ? 3 : 0) + (skills.has(Talent.Damage_2) ? 5 : 0) + (skills.has(Talent.Damage_3) ? 10 : 0) + (skills.has(Talent.Damage_4) ? 15 : 0) + (skills.has(Talent.Damage_5) ? 20 : 0);
+        damage = 5 + (skills.has(Talent.Damage_1) ? 3 : 0) + (skills.has(Talent.Damage_2) ? 5 : 0) + (skills.has(Talent.Damage_3) ? 10 : 0);
         maxJumps = skills.has(Talent.DoubleJump) ? 2 : 1;
     }
 

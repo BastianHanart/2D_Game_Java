@@ -1,32 +1,38 @@
 package com.mygame;
 
-public enum Talent {
-    HPMax_1 ("Max HP I", 1, null, 600, 300),
-    HPMax_2 ("Max HP II", 2, HPMax_1, 625, 450),
-    HPMax_3 ("Max HP III", 2, HPMax_2, 600, 600),
-    HPMax_4 ("Max HP IV", 2, HPMax_3, 575, 750),
-    HPMax_5 ("Max HP V", 2, HPMax_4, 600, 900),
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
-    Damage_1 ("Damage I", 1, null, 1000, 300),
-    Damage_2 ("Damage II", 2, Damage_1, 1025, 450),
-    Damage_3 ("Damage III", 3, Damage_2, 1000, 600),
-    Damage_4 ("Damage IV", 4, Damage_3, 975, 750),
-    Damage_5 ("Damage V", 5, Damage_4, 1000, 900),
+public enum Talent {
+
+    Dash("Dash", 1, Collections.emptyList(), 1170, 740),
+    DoubleJump("Double jump", 2, Arrays.asList(Dash), 1420, 820),
+
+    HPMax_1("Max HP I", 1, Collections.emptyList(), 655, 560),
+    HPMax_2("Max HP II", 2, Arrays.asList(HPMax_1), 465, 560),
+    HPMax_3("Max HP III", 2, Arrays.asList(HPMax_2), 310, 450),
+    HPMax_4("Max HP IV", 2, Arrays.asList(HPMax_3), 275, 680),
+    HPMax_5("Max HP V", 2, Arrays.asList(HPMax_4), 185, 560),
+
+    Damage_1("Damage I", 1, Collections.emptyList(), 1215, 560),
+    Damage_2("Damage II", 2, Arrays.asList(Damage_1), 1385, 560),
+    Damage_3("Damage III", 3, Arrays.asList(Damage_2, DoubleJump), 1570, 560);
+
     
-    Dash ("Dash", 1, null, 800, 325),
-    DoubleJump ("Double jump", 2, Dash, 825, 475);
 
     public final String name;
     public final int cost;
-    public final Talent prerequisite;
     public final float x;
     public final float y;
+    public final ArrayList<Talent> prerequisite;
 
-    Talent(String name, int cost, Talent prerequisite, float x, float y) {
-        this.name = name; 
-        this.cost = cost; 
-        this.prerequisite = prerequisite;
-        this.x = x; 
+    Talent(String name, int cost, List<Talent> prerequisite, float x, float y) {
+        this.name = name;
+        this.cost = cost;
+        this.prerequisite = new ArrayList<>(prerequisite);
+        this.x = x;
         this.y = y;
     }
 }

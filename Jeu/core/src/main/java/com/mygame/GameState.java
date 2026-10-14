@@ -7,7 +7,7 @@ public class GameState {
     public static int xp = 0;
 
     public static int xpRequis() {
-        return 50 + (niveau - 1) * 25;
+        return 10;
     }
 
     public static boolean addXp(int montant) {

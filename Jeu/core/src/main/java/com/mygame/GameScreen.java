@@ -40,7 +40,6 @@ public class GameScreen implements Screen {
         camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
         monsters = level.getMonsters();
-        
     }
 
     // ===========================================
@@ -53,7 +52,8 @@ public class GameScreen implements Screen {
         level = LevelManager.loadLevel(levelNumber, game);
 
         float startX = enterFromRight ? level.getWidth() - 150 : 50;
-        character.setPosition(startX, 800);
+        float startY = enterFromRight ? 800 : 950;
+        character.setPosition(startX, startY);
         level.getMusic().play();
     }
 
