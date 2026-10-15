@@ -1,29 +1,30 @@
 package com.mygame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
 public class LevelManager {
 
-private static final int GRID = 16;     // vraie taille de grille LDtk
-private static final float SCALE = 8f;  // 16 * 8 = 128 = ta cellule actuelle
+private static final float CELL = 128f;
 
-public static Level loadLevel(int levelNumber, Game game){
+    public static Level loadLevel(int levelNumber, Game game) {
         switch (levelNumber) {
             case 1:  
-                return loadFromLDtk("Level_1", "Music/Map1.mp3", game);
+                return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
             case 2:  
-                return loadFromLDtk("Level_1", "Music/Map2.mp3", game);
+                return loadFromLDtk("Level_2", 32, 16f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
             case 3:  
-                return loadFromLDtk("Level_1", "Music/Map3.mp3", game);
+                return loadFromLDtk("Level_1", 16, 128f, "Music/Map3.mp3", "windrise-background-4k.png", "Decor.png", game);
             default: 
-                return loadFromLDtk("Level_1", "Music/Map1.mp3", game);
+                return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
         }
     }
 
-    private static Level loadFromLDtk(String levelName, String music, Game game) {
+    private static Level loadFromLDtk(String levelName, int gridSize, float cell, String music, String fond, String Decor, Game game) {
+        float scale = cell / gridSize;
         String dir = "Map_2Dgame/simplified/" + levelName + "/";
 
         // Lecture de la grille de collision
@@ -38,13 +39,16 @@ public static Level loadLevel(int levelNumber, Game game){
             }
         }
 
-        float cell = GRID * SCALE;
-        Level level = new Level(cols * cell, rows * cell, music,"windrise-background-4k.png", dir + "Background.png", dir + "Decor.png");
+        Level level = new Level(cols * cell, rows * cell, music, fond, dir + "Background.png", dir + Decor);
         level.setCollision(new CollisionMap(grid, cell));
 
         JsonValue root = new JsonReader().parse(
                 Gdx.files.internal(dir + "data.json")
         );
+
+        Texture decorTex = level.getLayers().peek();
+        Gdx.app.log("SCALE", "png=" + decorTex.getWidth() + "px, monde=" + level.getWidth()
+                + "px, agrandissement x" + (level.getWidth() / decorTex.getWidth()));
 
         JsonValue entities = root.get("entities");
 
@@ -56,8 +60,8 @@ public static Level loadLevel(int levelNumber, Game game){
 
                     String type = enemy.get("customFields").getString("EntityType");
 
-                    float x = enemy.getFloat("x") * SCALE;
-                    float y = (root.getFloat("height") - enemy.getFloat("y") - enemy.getFloat("height")) * SCALE;
+                    float x = enemy.getFloat("x") * scale;
+                    float y = (root.getFloat("height") - enemy.getFloat("y") - enemy.getFloat("height")) * scale;
 
                     Monster monster = null;
 
@@ -72,7 +76,7 @@ public static Level loadLevel(int levelNumber, Game game){
                         + " json x=" + enemy.getFloat("x") + " y=" + enemy.getFloat("y")
                         + " w=" + enemy.getFloat("width") + " h=" + enemy.getFloat("height")
                         + " | levelW=" + root.getFloat("width") + " levelH=" + root.getFloat("height")
-                        + " | cols*GRID=" + (cols * GRID) + " rows*GRID=" + (rows * GRID));
+                        + " | cols*GRID=" + (cols * gridSize) + " rows*GRID=" + (rows * gridSize));
                         monster.setPosition(x, y);
                         level.addMonster(monster);
                     }

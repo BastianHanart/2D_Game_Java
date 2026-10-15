@@ -10,6 +10,7 @@
 	"customFields" : {},
 	"layers": [
 		"Background.png",
+		"Ville.png",
 		"Terrain.png",
 		"Decor.png"
 	],

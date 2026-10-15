@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
         level = LevelManager.loadLevel(levelNumber, game);
 
         float startX = enterFromRight ? level.getWidth() - 150 : 100;
-        float startY = enterFromRight ? 1000 : 800;
+        float startY = enterFromRight ? 1000 : 1500;
         character.setPosition(startX, startY);
         level.getMusic().play();
     }
