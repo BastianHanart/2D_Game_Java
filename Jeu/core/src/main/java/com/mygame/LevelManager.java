@@ -8,14 +8,12 @@ import com.badlogic.gdx.utils.JsonValue;
 
 public class LevelManager {
 
-private static final float CELL = 128f;
-
     public static Level loadLevel(int levelNumber, Game game) {
         switch (levelNumber) {
             case 1:  
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
             case 2:  
-                return loadFromLDtk("Level_2", 32, 16f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
+                return loadFromLDtk("Level_2", 32, 20f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
             case 3:  
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map3.mp3", "windrise-background-4k.png", "Decor.png", game);
             default: 
