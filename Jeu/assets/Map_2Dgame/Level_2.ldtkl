@@ -51,7 +51,46 @@
 			"seed": 5996615,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
-			"entityInstances": []
+			"entityInstances": [
+				{
+					"__identifier": "PlayerSpawn",
+					"__grid": [6,38],
+					"__pivot": [0.5,0],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#D77643",
+					"iid": "a2e602d0-bde0-11f1-b415-236121eb64bf",
+					"width": 16,
+					"height": 16,
+					"defUid": 33,
+					"px": [108,621],
+					"fieldInstances": [{ "__identifier": "SpawnType", "__type": "LocalEnum.SpawnType", "__value": "Left", "__tile": null, "defUid": 34, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["Left"]
+					}] }],
+					"__worldX": 113,
+					"__worldY": 2093
+				},
+				{
+					"__identifier": "PlayerSpawn",
+					"__grid": [381,38],
+					"__pivot": [0.5,0],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#D77643",
+					"iid": "a835dfd0-bde0-11f1-b415-3b2e2160e73e",
+					"width": 16,
+					"height": 16,
+					"defUid": 33,
+					"px": [6108,622],
+					"fieldInstances": [{ "__identifier": "SpawnType", "__type": "LocalEnum.SpawnType", "__value": "Right", "__tile": null, "defUid": 34, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["Right"]
+					}] }],
+					"__worldX": 6113,
+					"__worldY": 2094
+				}
+			]
 		},
 		{
 			"__identifier": "Decor",

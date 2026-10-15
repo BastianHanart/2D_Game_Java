@@ -34,7 +34,7 @@ public class GameScreen implements Screen {
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel, game);
         healthBar = new HealthBar();
-        character.setPosition(150, 700);
+        placePlayer("Start");
         level.getMusic().play();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(character.getX(), character.getY() + 150, 0);
@@ -50,10 +50,9 @@ public class GameScreen implements Screen {
         level.getMusic().stop();
         level.dispose();
         level = LevelManager.loadLevel(levelNumber, game);
+        monsters = level.getMonsters();
 
-        float startX = enterFromRight ? level.getWidth() - 150 : 100;
-        float startY = enterFromRight ? 1000 : 400;
-        character.setPosition(startX, startY);
+        placePlayer(enterFromRight ? "Right" : "Left");
         level.getMusic().play();
     }
 
@@ -70,6 +69,15 @@ public class GameScreen implements Screen {
             } else {
                 body.x = body.w / 2f;   // mur invisible au bord du niveau 1
             }
+        }
+    }
+
+    private void placePlayer(String spawnType) {
+        com.badlogic.gdx.math.Vector2 p = level.getSpawn(spawnType);
+        if (p != null) {
+            character.setPosition(p.x, p.y);
+        } else {
+            character.setPosition(150, 700); // secours si le point n'existe pas
         }
     }
 

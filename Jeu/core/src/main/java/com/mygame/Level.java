@@ -11,6 +11,8 @@ public class Level {
     private final Array<Texture> layers = new Array<>();
     private CollisionMap collision;
     private final Array<Monster> monsters = new Array<>();
+    private final java.util.Map<String, com.badlogic.gdx.math.Vector2> spawns = new java.util.HashMap<>();
+
 
     public Level(float width, float height, String musicPath, String... layerPaths) {
         this.width = width;
@@ -38,6 +40,14 @@ public class Level {
     }
     public CollisionMap getCollision() { 
         return collision; 
+    }
+
+    public void addSpawn(String type, float x, float y) {
+        spawns.put(type, new com.badlogic.gdx.math.Vector2(x, y));
+    }
+
+    public com.badlogic.gdx.math.Vector2 getSpawn(String type) {
+        return spawns.get(type); // peut être null
     }
 
     public float getWidth() { 
