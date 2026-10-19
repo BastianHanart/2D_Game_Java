@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SettingsScreen implements Screen {
@@ -25,6 +27,7 @@ public class SettingsScreen implements Screen {
     private Stage stage;
     private Skin skin;
     private Texture background;
+    private Label backLabel;
 
     // Permet de savoir si on attend une nouvelle touche
     private boolean waitingForKey = false;
@@ -54,7 +57,7 @@ public class SettingsScreen implements Screen {
 
         // Le Stage reçoit les clics et la molette
         Gdx.input.setInputProcessor(stage);
-
+        
         // =====================================================
         //                        SKIN
         // =====================================================
@@ -91,6 +94,9 @@ public class SettingsScreen implements Screen {
 
         Texture buttonTexture = new Texture("removebg(1).png");
         Drawable buttonDrawable = new TextureRegionDrawable( new TextureRegion(buttonTexture));
+
+        float width = 200f;
+        float height = width * 389f / 871f;
 
         // =====================================================
         // STYLE DU BOUTON
@@ -189,6 +195,7 @@ public class SettingsScreen implements Screen {
             );
 
         fullscreenButton.getLabel().setFontScale(1.2f);
+        fullscreenButton.getLabelCell().padTop(25f);
         fullscreenButton.addListener(
             new ChangeListener() {
                 @Override
@@ -201,7 +208,10 @@ public class SettingsScreen implements Screen {
             }
         );
 
-        panel.add(fullscreenButton).width(600).height(70).padBottom(10).row();
+        float buttonWidth = 400f;
+        float buttonHeight = buttonWidth * 389f / 871f;
+
+        panel.add(fullscreenButton).width(buttonWidth).height(buttonHeight).padBottom(10).row();
 
         // -----------------------------------------------------
         // FENETRE
@@ -213,6 +223,7 @@ public class SettingsScreen implements Screen {
                 skin
             );
         windowedButton.getLabel().setFontScale(1.2f);
+        windowedButton.getLabelCell().padTop(25f);
         windowedButton.addListener(
             new ChangeListener() {
                 @Override
@@ -225,22 +236,23 @@ public class SettingsScreen implements Screen {
             }
         );
 
-        panel.add(windowedButton).width(600).height(70).padBottom(30).row();
+        panel.add(windowedButton).width(buttonWidth).height(buttonHeight).padBottom(10).row();
 
         // =====================================================
         // RETOUR
         // =====================================================
 
-        // RETOUR (hors du scroll, toujours visible)
-        backButton = new TextButton("RETOUR", skin);
-        backButton.getLabel().setFontScale(1.2f);
-        backButton.addListener(new ChangeListener() {
+        backLabel = new Label("RETOUR", skin);
+        backLabel.setFontScale(1.2f);
+
+        backLabel.addListener(new ClickListener() {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new MenuScreen(game));
             }
         });
-        stage.addActor(backButton);
+
+        stage.addActor(backLabel);
 
         // SCROLLPANE
         scrollPane = new ScrollPane(panel);
@@ -266,9 +278,11 @@ public class SettingsScreen implements Screen {
         float areaY = height * 0.19f;   // bas de la zone (origine en bas à gauche)
         scrollPane.setBounds(areaX, areaY, areaW, areaH);
         // Bouton RETOUR centré sur la pierre du bas
-        float btnW = 600f, btnH = 70f;
-        backButton.setSize(btnW, btnH);
-        backButton.setPosition((width - btnW) / 2f, height * 0.06f);
+        backLabel.pack();
+        backLabel.setPosition(
+            (width - backLabel.getWidth()) / 2f,
+            height * 0.085f
+        );
     }
 
     private Table createKeyRow(
@@ -292,10 +306,11 @@ public class SettingsScreen implements Screen {
         // -----------------------------------------------------
 
         final TextButton keyButton = new TextButton(getKeyName(key),skin);
-
         keyButton.getLabel().setFontScale(1.1f);
-
-        row.add(keyButton).width(200).height(60).right().padRight(20);
+        keyButton.getLabelCell().padTop(12f);
+        float buttonWidth = 200f;
+        float buttonHeight = buttonWidth * 389f / 871f;
+        row.add(keyButton).width(buttonWidth).height(buttonHeight).right().padRight(20);
 
         // -----------------------------------------------------
         // CLIC
