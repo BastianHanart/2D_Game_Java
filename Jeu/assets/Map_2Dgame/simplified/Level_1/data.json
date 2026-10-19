@@ -94,6 +94,34 @@
 					"EntityType": "Squelette"
 				}
 			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "b2d9df90-bde0-11f1-b415-b36e88afa59d",
+				"layer": "Entities",
+				"x": 1368,
+				"y": 126,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Right"
+				}
+			},
+			{
+				"id": "PlayerSpawn",
+				"iid": "b74b1c60-bde0-11f1-b415-9f894f1586da",
+				"layer": "Entities",
+				"x": 30,
+				"y": 174,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Start"
+				}
+			}
 		]
 	}
 }

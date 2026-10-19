@@ -14,5 +14,34 @@
 		"Terrain.png",
 		"Decor.png"
 	],
-	"entities" : {}
+	"entities": {
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "a2e602d0-bde0-11f1-b415-236121eb64bf",
+				"layer": "Entities",
+				"x": 108,
+				"y": 621,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Left"
+				}
+			},
+			{
+				"id": "PlayerSpawn",
+				"iid": "a835dfd0-bde0-11f1-b415-3b2e2160e73e",
+				"layer": "Entities",
+				"x": 6108,
+				"y": 622,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Right"
+				}
+			}
+		]
+	}
 }

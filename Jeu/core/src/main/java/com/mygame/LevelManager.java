@@ -13,7 +13,7 @@ public class LevelManager {
             case 1:  
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
             case 2:  
-                return loadFromLDtk("Level_2", 32, 20f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
+                return loadFromLDtk("Level_2", 20, 20f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
             case 3:  
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map3.mp3", "windrise-background-4k.png", "Decor.png", game);
             default: 
@@ -51,12 +51,30 @@ public class LevelManager {
         JsonValue entities = root.get("entities");
 
         if (entities != null) {
+            JsonValue spawnsJson = entities.get("PlayerSpawn");
+            if (spawnsJson != null) {
+                for (JsonValue s : spawnsJson) {
+                    String type = s.get("customFields").getString("SpawnType");
+
+                    float x = (s.getFloat("x") + s.getFloat("width") / 2f) * scale;
+                    float y = (root.getFloat("height") - (s.getFloat("y") + s.getFloat("height"))) * scale;
+
+                    Gdx.app.log("SPAWN2", type + " json x=" + s.getFloat("x") + " y=" + s.getFloat("y")
+            + " | levelW=" + root.getFloat("width") + " levelH=" + root.getFloat("height")
+            + " | monde=" + level.getWidth() + "x" + level.getHeight()
+            + " | -> x=" + x + " y=" + y);
+
+
+                    level.addSpawn(type, x, y);
+                }
+            }
             JsonValue enemies = entities.get("Enemy");
 
             if (enemies != null) {
                 for (JsonValue enemy : enemies) {
 
                     String type = enemy.get("customFields").getString("EntityType");
+                    scale = level.getWidth() / root.getFloat("width");
 
                     float x = enemy.getFloat("x") * scale;
                     float y = (root.getFloat("height") - enemy.getFloat("y") - enemy.getFloat("height")) * scale;
