@@ -33,10 +33,6 @@ public class Fantome extends Monster {
     private float idleDuration = 0f;
 
     private boolean idleMoving = false;
-
-    private int idleDirection = 1;
-
-    private static final float IDLE_MIN_Y_OFFSET = 0f;     // hauteur min au-dessus du sol de départ
     private static final float IDLE_MAX_Y_OFFSET = 350f;   // hauteur max au-dessus du sol de départ
 
     private float groundY;               // altitude minimale (position de départ)

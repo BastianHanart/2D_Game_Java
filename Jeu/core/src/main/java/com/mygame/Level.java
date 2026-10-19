@@ -11,6 +11,7 @@ public class Level {
     private final Array<Texture> layers = new Array<>();
     private CollisionMap collision;
     private final Array<Monster> monsters = new Array<>();
+    private final Array<Villageois> PNJ = new Array<>();
     private final java.util.Map<String, com.badlogic.gdx.math.Vector2> spawns = new java.util.HashMap<>();
 
 
@@ -31,8 +32,16 @@ public class Level {
         return monsters;
     }
 
+    public Array<Villageois> getVillageois() {
+        return PNJ;
+    }
+
     public void addMonster(Monster monster) {
         monsters.add(monster);
+    }
+
+    public void addVillageois(Villageois pnj) {
+        PNJ.add(pnj);
     }
 
     public void setCollision(CollisionMap collision) { 

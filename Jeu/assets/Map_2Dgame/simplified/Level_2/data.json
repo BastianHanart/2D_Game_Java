@@ -11,6 +11,7 @@
 	"layers": [
 		"Background.png",
 		"Ville.png",
+		"Foret.png",
 		"Terrain.png",
 		"Decor.png"
 	],
@@ -40,6 +41,47 @@
 				"color": 14120515,
 				"customFields": {
 					"SpawnType": "Right"
+				}
+			}
+		],
+		"Enemy": [
+			{
+				"id": "Enemy",
+				"iid": "7602baa0-bde0-11f1-8562-9780ba8754f4",
+				"layer": "Entities",
+				"x": 506,
+				"y": 619,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "7959fbf0-bde0-11f1-8562-e78622caa38a",
+				"layer": "Entities",
+				"x": 1394,
+				"y": 609,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "7be784a0-bde0-11f1-8562-0705c723fe06",
+				"layer": "Entities",
+				"x": 1506,
+				"y": 607,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
 				}
 			}
 		]

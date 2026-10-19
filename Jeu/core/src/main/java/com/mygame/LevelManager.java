@@ -15,7 +15,7 @@ public class LevelManager {
             case 2:  
                 return loadFromLDtk("Level_2", 20, 20f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
             case 3:  
-                return loadFromLDtk("Level_1", 16, 128f, "Music/Map3.mp3", "windrise-background-4k.png", "Decor.png", game);
+                return loadFromLDtk("Level_3", 20, 20f, "Music/Map3.mp3", "windrise-background-4k.png", "Foret.png", game);
             default: 
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
         }
@@ -80,21 +80,26 @@ public class LevelManager {
                     float y = (root.getFloat("height") - enemy.getFloat("y") - enemy.getFloat("height")) * scale;
 
                     Monster monster = null;
+                    Villageois villageois = null;
 
                     if (type.equals("Squelette")) {
                         monster = new Squelette(game);
-                    } else if (type.equals("Fantome")) {
+                    } 
+                    else if (type.equals("Fantome")) {
                         monster = new Fantome(game);
+                    }
+                    else if (type.equals("PNJ")) {
+                        villageois = new Villageois(game);
                     }
 
                     if (monster != null) {
-                        Gdx.app.log("SPAWN", type
-                        + " json x=" + enemy.getFloat("x") + " y=" + enemy.getFloat("y")
-                        + " w=" + enemy.getFloat("width") + " h=" + enemy.getFloat("height")
-                        + " | levelW=" + root.getFloat("width") + " levelH=" + root.getFloat("height")
-                        + " | cols*GRID=" + (cols * gridSize) + " rows*GRID=" + (rows * gridSize));
                         monster.setPosition(x, y);
                         level.addMonster(monster);
+                    }
+
+                    if (villageois != null) {
+                        villageois.setPosition(x, y);
+                        level.addVillageois(villageois);
                     }
                 }
             }

@@ -89,6 +89,63 @@
 					}] }],
 					"__worldX": 6113,
 					"__worldY": 2094
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [31,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "7602baa0-bde0-11f1-8562-9780ba8754f4",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [506,619],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 511,
+					"__worldY": 2091
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [87,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "7959fbf0-bde0-11f1-8562-e78622caa38a",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [1394,609],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 1399,
+					"__worldY": 2081
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [94,37],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "7be784a0-bde0-11f1-8562-0705c723fe06",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [1506,607],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 1511,
+					"__worldY": 2079
 				}
 			]
 		},
@@ -724,6 +781,31 @@
 			],
 			"autoLayerTiles": [],
 			"seed": 6008120,
+			"overrideTilesetUid": null,
+			"gridTiles": [],
+			"entityInstances": []
+		},
+		{
+			"__identifier": "Foret",
+			"__type": "Tiles",
+			"__cWid": 384,
+			"__cHei": 51,
+			"__gridSize": 16,
+			"__opacity": 1,
+			"__pxTotalOffsetX": 0,
+			"__pxTotalOffsetY": 0,
+			"__tilesetDefUid": 35,
+			"__tilesetRelPath": "Gemini_Generated_Image_x1v2zyx1v2zyx1v2-Photoroom.png",
+			"iid": "df2d8750-bde0-11f1-b292-af3eccb1cd41",
+			"levelId": 29,
+			"layerDefUid": 37,
+			"pxOffsetX": 0,
+			"pxOffsetY": 0,
+			"visible": true,
+			"optionalRules": [],
+			"intGridCsv": [],
+			"autoLayerTiles": [],
+			"seed": 812948,
 			"overrideTilesetUid": null,
 			"gridTiles": [],
 			"entityInstances": []

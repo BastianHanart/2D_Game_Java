@@ -15,6 +15,7 @@ public class GameScreen implements Screen {
     private SpriteBatch batch;
     private Character character;
     private Array<Monster> monsters;
+    private Array<Villageois> villageois;
     private OrthographicCamera camera;
     private Level level;
     private int currentLevel = 1;
@@ -56,6 +57,7 @@ public class GameScreen implements Screen {
         camera.update();
         monsters = level.getMonsters();
         SaveManager.saveCurrent(character, currentLevel);
+        villageois = level.getVillageois();
     }
 
     // ===========================================
@@ -67,6 +69,7 @@ public class GameScreen implements Screen {
         level.dispose();
         level = LevelManager.loadLevel(levelNumber, game);
         monsters = level.getMonsters();
+        villageois = level.getVillageois();
 
         placePlayer(enterFromRight ? "Right" : "Left");
         level.getMusic().play();
@@ -166,6 +169,11 @@ public class GameScreen implements Screen {
                 ((Fantome) monster).update(delta, level.getCollision(), character);
             }
         }
+
+        for (Villageois pnj : villageois) {
+            pnj.update(delta, level.getCollision(), character);
+        }
+
         checkLevelChange();
         updateCamera();
 
@@ -179,14 +187,6 @@ public class GameScreen implements Screen {
             Texture t = level.getLayers().get(i);
             batch.draw(t, 0, 0, level.getWidth(), level.getHeight());
         }
-        character.render(batch);
-        float viewLeft = camera.position.x - camera.viewportWidth / 2f;
-        float viewTop = camera.position.y + camera.viewportHeight / 2f;
-        float margeX = 20;
-        float margeY = 20;
-        float posX = viewLeft + margeX;
-        float posY = viewTop - margeY - healthBar.getHeightHealthBar();
-        healthBar.draw(batch, posX, posY, character.getHP(), character.getHPMax());
         for (Monster monster : monsters) {
             if (!monster.isDead() && monster instanceof Squelette) {
                 ((Squelette) monster).render(batch);
@@ -195,6 +195,17 @@ public class GameScreen implements Screen {
                 ((Fantome) monster).render(batch);
             }
         }
+        for (Villageois pnj : villageois) {
+            pnj.render(batch);
+        }
+        character.render(batch);
+        float viewLeft = camera.position.x - camera.viewportWidth / 2f;
+        float viewTop = camera.position.y + camera.viewportHeight / 2f;
+        float margeX = 20;
+        float margeY = 20;
+        float posX = viewLeft + margeX;
+        float posY = viewTop - margeY - healthBar.getHeightHealthBar();
+        healthBar.draw(batch, posX, posY, character.getHP(), character.getHPMax());
         batch.end();
     }
 
@@ -255,6 +266,8 @@ public class GameScreen implements Screen {
                 ((Fantome) monster).dispose();
             }
         }
+        for (Villageois pnj : villageois)
+            pnj.dispose();
         level.dispose();
     }
 }
