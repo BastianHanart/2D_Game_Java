@@ -119,7 +119,7 @@ public class MenuScreen implements Screen {
 
             // --- Si le clic se trouve sur l'un des boutons, alors on fait l'action du dit-bouton ---            
             if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Play_Y && mouseY <= button_Play_Y + buttonHeight) {
-                game.setScreen(new GameScreen(game));
+                game.setScreen(new SaveSlotScreen(game));
             }
             if (mouseX >= buttonX && mouseX <= buttonX + buttonWidth && mouseY >= button_Exit_Y && mouseY <= button_Exit_Y + buttonHeight) {
                 Gdx.app.exit();

@@ -29,6 +29,10 @@ public class Character {
         return this.HP; 
     }
 
+    public void setHP(float hp) {
+        this.HP = Math.min(hp, HPMax);
+    }
+
     // ---------- Constantes ----------
     private static final float WALK_SPEED = 400f;
     private static final float RUN_SPEED = 800f;

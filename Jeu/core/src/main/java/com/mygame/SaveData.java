@@ -1,0 +1,16 @@
+package com.mygame;
+
+public class SaveData {
+    public int version = 1;
+    public int level = 1;
+    public float x, y;
+    public float hp;
+    public int playerLevel = 1;
+    public int xp = 0;
+    public int points = 0;
+    public String[] talents = new String[0];
+    public float playTime;
+    public long timestamp;
+    
+    public SaveData() {}
+}
