@@ -23,23 +23,39 @@ public class GameScreen implements Screen {
     private HealthBar healthBar;
     private boolean playerAttackHit = false;
 
-    public GameScreen(Game game) {
+    private final SaveData loaded;
+
+    public GameScreen(Game game) { this(game, null); }
+
+    public GameScreen(Game game, SaveData loaded) {
         this.game = game;
+        this.loaded = loaded;
+        if (loaded != null) currentLevel = loaded.level;
     }
 
     @Override
     public void show() {
+        if (character != null) {
+            Gdx.input.setInputProcessor(null);
+            return;
+        }
         Gdx.input.setInputProcessor(null);
         batch = new SpriteBatch();
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel, game);
         healthBar = new HealthBar();
-        character.setPosition(150, 700);
+        if (loaded != null) {
+            character.setPosition(loaded.x, loaded.y);
+            character.setHP(loaded.hp);
+        } else {
+            character.setPosition(150, 700);
+        }
         level.getMusic().play();
         camera = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.position.set(character.getX(), character.getY() + 150, 0);
         camera.update();
         monsters = level.getMonsters();
+        SaveManager.saveCurrent(character, currentLevel);
     }
 
     // ===========================================
@@ -55,6 +71,7 @@ public class GameScreen implements Screen {
         float startY = enterFromRight ? 1000 : 400;
         character.setPosition(startX, startY);
         level.getMusic().play();
+        SaveManager.saveCurrent(character, currentLevel);
     }
 
     private void checkLevelChange() {
@@ -99,6 +116,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        GameState.playTime += delta;
         // Evite les gros sauts de physique si une frame est très longue
         delta = Math.min(delta, 1 / 30f);
 
@@ -126,6 +144,7 @@ public class GameScreen implements Screen {
                     boolean niveauGagne = GameState.addXp(monster.getXPReward());
                     if (niveauGagne) {
                         character.recalculerStats();
+                        SaveManager.saveCurrent(character, currentLevel);
                     }
                 }
             }
@@ -213,6 +232,7 @@ public class GameScreen implements Screen {
 
     }
     @Override public void hide() {
+        if (character != null) SaveManager.saveCurrent(character, currentLevel);
     }
 
     @Override

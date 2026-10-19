@@ -41,4 +41,17 @@ public class SkillTree {
         unlocked.add(t);
         return true;
     }
+
+    public void reset() { unlocked.clear(); points = 0; }
+    public String[] unlockedNames() {
+        return unlocked.stream().map(Enum::name).toArray(String[]::new);
+    }
+
+    public void restore(String[] names, int pts) {
+        unlocked.clear();
+        for (String n : names) {
+            try { unlocked.add(Talent.valueOf(n)); } catch (IllegalArgumentException ignored) {}
+        }
+        points = pts;
+    }
 }
