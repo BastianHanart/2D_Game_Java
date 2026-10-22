@@ -1,0 +1,50 @@
+{
+	"identifier": "Level_4",
+	"uniqueIdentifer": "1018e210-bde0-11f1-8bee-b7770d6273b8",
+	"x": 32,
+	"y": 3824,
+	"width": 2688,
+	"height": 688,
+	"bgColor": "#696A79",
+	"neighbourLevels": [],
+	"customFields" : {},
+	"layers": [
+		"Background.png",
+		"Ville.png",
+		"Foret.png",
+		"Terrain.png",
+		"Decor.png"
+	],
+	"entities": {
+		"Enemy": [
+			{
+				"id": "Enemy",
+				"iid": "efba4380-bde0-11f1-8bee-91163d82bfd3",
+				"layer": "Entities",
+				"x": 1704,
+				"y": 552,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Boss"
+				}
+			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "45f25120-bde0-11f1-8d8b-41a37a939bfe",
+				"layer": "Entities",
+				"x": 56,
+				"y": 544,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Left"
+				}
+			}
+		]
+	}
+}

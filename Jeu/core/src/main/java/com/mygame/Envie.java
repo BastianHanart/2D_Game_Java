@@ -3,6 +3,7 @@ package com.mygame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
@@ -29,7 +30,10 @@ public class Envie extends Monster {
     private static final int MAX_SUMMONS = 4;
 
     private final Game game;
-    private final Texture texture;
+    private final Texture sheetWalk;
+    private final TextureRegion idleFrame;
+    private final TextureRegion attackFrame;
+
     private final Texture barFull, barEmpty;
 
     private boolean facingRight = false;
@@ -53,10 +57,12 @@ public class Envie extends Monster {
     public Envie(Game game) {
         super(game, LIFE_MAX, 100);
         this.game = game;
-        texture = new Texture("Cute-Green-Monster-PNG-Image.png");
+        sheetWalk = new Texture("Envie.png");
+        idleFrame = new TextureRegion(sheetWalk, 50, 10, 240, 160);
+        attackFrame = new TextureRegion(sheetWalk, 250, 410, 240, 160);
         barFull = new Texture("FullHealthBar.png");
         barEmpty = new Texture("EmptyHealthBar.png");
-        body.w = 90;
+        body.w = 240;
         body.h = 160;
     }
 
@@ -211,12 +217,20 @@ public class Envie extends Monster {
             if (m instanceof Squelette) ((Squelette) m).render(batch);
             else if (m instanceof Fantome) ((Fantome) m).render(batch);
         }
+        TextureRegion frame = null;
+
+        if (attacking){
+            frame = attackFrame;
+        }
+        else{
+            frame = idleFrame;
+        }
 
         float size = 230f;
         if (facingRight) {
-            batch.draw(texture, body.x - size / 2f, body.y, size, size);
+            batch.draw(frame, body.x - size / 2f, body.y, size, size);
         } else {
-            batch.draw(texture, body.x + size / 2f, body.y, -size, size);
+            batch.draw(frame, body.x + size / 2f, body.y, -size, size);
         }
 
         float barW = 200f;
@@ -233,7 +247,7 @@ public class Envie extends Monster {
     public void dispose() {
         for (Monster m : summons) disposeSummon(m);
         summons.clear();
-        texture.dispose();
+        sheetWalk.dispose();
         barFull.dispose();
         barEmpty.dispose();
     }

@@ -136,6 +136,7 @@ public class GameScreen implements Screen {
         }
 
         else {
+            level.getMusic().stop();
             game.setScreen(new MenuScreen(game));
         }
 
@@ -168,6 +169,9 @@ public class GameScreen implements Screen {
             if (!monster.isDead() && monster instanceof Fantome) {
                 ((Fantome) monster).update(delta, level.getCollision(), character);
             }
+            if (!monster.isDead() && monster instanceof Envie) {
+                ((Envie) monster).update(delta, level.getCollision(), character);
+            }
         }
 
         for (Villageois pnj : villageois) {
@@ -193,6 +197,9 @@ public class GameScreen implements Screen {
             }
             else if (!monster.isDead() && monster instanceof Fantome) {
                 ((Fantome) monster).render(batch);
+            }
+            else if (!monster.isDead() && monster instanceof Envie) {
+                ((Envie) monster).render(batch);
             }
         }
         for (Villageois pnj : villageois) {
@@ -251,6 +258,8 @@ public class GameScreen implements Screen {
 
     }
     @Override public void hide() {
+        if (level != null) level.getMusic().stop();
+
         if (character != null) SaveManager.saveCurrent(character, currentLevel);
     }
 
@@ -264,6 +273,9 @@ public class GameScreen implements Screen {
             }
             if (monster instanceof Fantome) {
                 ((Fantome) monster).dispose();
+            }
+            if (monster instanceof Envie) {
+                ((Envie) monster).dispose();
             }
         }
         for (Villageois pnj : villageois)

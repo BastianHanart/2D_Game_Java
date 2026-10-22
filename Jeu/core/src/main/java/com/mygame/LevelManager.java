@@ -15,7 +15,9 @@ public class LevelManager {
             case 2:  
                 return loadFromLDtk("Level_2", 20, 20f, "Music/Map2.mp3", "Fond_niveau_2.jpeg", "Ville.png", game);
             case 3:  
-                return loadFromLDtk("Level_3", 20, 20f, "Music/Map3.mp3", "windrise-background-4k.png", "Foret.png", game);
+                return loadFromLDtk("Level_3", 20, 25f, "Music/Map3.mp3", "Fond_Boss.jpeg", "Foret.png", game);
+            case 4:
+                return loadFromLDtk("Level_4", 20, 20f, "Music/Map3.mp3", "Fond_Boss.jpeg", "Foret.png", game);
             default: 
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
         }
@@ -81,6 +83,7 @@ public class LevelManager {
 
                     Monster monster = null;
                     Villageois villageois = null;
+                    Envie boss = null;
 
                     if (type.equals("Squelette")) {
                         monster = new Squelette(game);
@@ -92,6 +95,10 @@ public class LevelManager {
                         villageois = new Villageois(game);
                     }
 
+                    else if (type.equals("Boss")) {
+                        boss = new Envie(game);
+                    }
+
                     if (monster != null) {
                         monster.setPosition(x, y);
                         level.addMonster(monster);
@@ -100,6 +107,11 @@ public class LevelManager {
                     if (villageois != null) {
                         villageois.setPosition(x, y);
                         level.addVillageois(villageois);
+                    }
+
+                    if (boss != null) {
+                        boss.setPosition(x, y);
+                        level.addMonster(boss);
                     }
                 }
             }

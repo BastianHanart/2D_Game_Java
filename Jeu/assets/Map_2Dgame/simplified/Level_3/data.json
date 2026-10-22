@@ -15,5 +15,179 @@
 		"Terrain.png",
 		"Decor.png"
 	],
-	"entities" : {}
+	"entities": {
+		"Enemy": [
+			{
+				"id": "Enemy",
+				"iid": "4f78cfc0-bde0-11f1-8d8b-377c34f0506b",
+				"layer": "Entities",
+				"x": 808,
+				"y": 488,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "5d5bf4f0-bde0-11f1-8d8b-434b388bd0af",
+				"layer": "Entities",
+				"x": 968,
+				"y": 488,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6392fda0-bde0-11f1-8d8b-938c008dfa4b",
+				"layer": "Entities",
+				"x": 1400,
+				"y": 200,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Fantome"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6511d570-bde0-11f1-8d8b-b140586cf4f3",
+				"layer": "Entities",
+				"x": 2168,
+				"y": 280,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Fantome"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "66ec88e0-bde0-11f1-8d8b-21a7794967d7",
+				"layer": "Entities",
+				"x": 1784,
+				"y": 488,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6968fa90-bde0-11f1-8d8b-4749c7755f34",
+				"layer": "Entities",
+				"x": 2360,
+				"y": 472,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6ce7c110-bde0-11f1-8d8b-7d0e48668174",
+				"layer": "Entities",
+				"x": 3352,
+				"y": 488,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6ebdb990-bde0-11f1-8d8b-8f3c1c9f8bc1",
+				"layer": "Entities",
+				"x": 3784,
+				"y": 472,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "70679900-bde0-11f1-8d8b-3d5537fc116c",
+				"layer": "Entities",
+				"x": 4328,
+				"y": 472,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "723eca00-bde0-11f1-8d8b-adff145c2621",
+				"layer": "Entities",
+				"x": 5032,
+				"y": 472,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Squelette"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "74f389c0-bde0-11f1-8d8b-2bfd453cea75",
+				"layer": "Entities",
+				"x": 5496,
+				"y": 232,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "Fantome"
+				}
+			}
+		],
+		"PlayerSpawn": [
+			{
+				"id": "PlayerSpawn",
+				"iid": "39b33f00-bde0-11f1-8d8b-bb32654b0ba7",
+				"layer": "Entities",
+				"x": 72,
+				"y": 480,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Left"
+				}
+			},
+			{
+				"id": "PlayerSpawn",
+				"iid": "3d0d8d90-bde0-11f1-8d8b-c9547ffc4f09",
+				"layer": "Entities",
+				"x": 6104,
+				"y": 480,
+				"width": 16,
+				"height": 16,
+				"color": 14120515,
+				"customFields": {
+					"SpawnType": "Right"
+				}
+			}
+		]
+	}
 }
