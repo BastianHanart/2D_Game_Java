@@ -325,7 +325,6 @@ public class Character {
         if (this.HP < 0) {
             this.HP = 0;
         }
-        System.out.println("Joueur touché ! Vie restante : " + this.HP);
     }
 
     // =========================================== \\

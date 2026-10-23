@@ -38,6 +38,7 @@ public class GameScreen implements Screen {
     public void show() {
         if (character != null) {
             Gdx.input.setInputProcessor(null);
+            level.getMusic().play();
             return;
         }
         Gdx.input.setInputProcessor(null);
@@ -72,6 +73,7 @@ public class GameScreen implements Screen {
         villageois = level.getVillageois();
 
         placePlayer(enterFromRight ? "Right" : "Left");
+        updateCamera(true);
         level.getMusic().play();
         SaveManager.saveCurrent(character, currentLevel);
     }
@@ -105,7 +107,7 @@ public class GameScreen implements Screen {
     //                CAMERA
     // ===========================================
 
-    private void updateCamera() {
+    private void updateCamera(boolean snap) {
         float halfW = camera.viewportWidth / 2f;
         float halfH = camera.viewportHeight / 2f;
 
@@ -114,10 +116,13 @@ public class GameScreen implements Screen {
 
         targetX = Math.max(halfW, Math.min(level.getWidth() - halfW, targetX));
         targetY = Math.max(halfH, Math.min(level.getHeight() - halfH, targetY));
-
+        if (snap) {
+                camera.position.set(targetX, targetY, 0);
+        } else {
         float t = 5f * Gdx.graphics.getDeltaTime();
         camera.position.x += (targetX - camera.position.x) * t;
         camera.position.y += (targetY - camera.position.y) * t;
+        }
         camera.update();
     }
 
@@ -179,7 +184,7 @@ public class GameScreen implements Screen {
         }
 
         checkLevelChange();
-        updateCamera();
+        updateCamera(false);
 
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -258,7 +263,7 @@ public class GameScreen implements Screen {
 
     }
     @Override public void hide() {
-        if (level != null) level.getMusic().stop();
+        if (level != null) level.getMusic().pause();
 
         if (character != null) SaveManager.saveCurrent(character, currentLevel);
     }

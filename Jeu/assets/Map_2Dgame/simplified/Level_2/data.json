@@ -83,6 +83,97 @@
 				"customFields": {
 					"EntityType": "PNJ"
 				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "56d9f5c0-bde0-11f1-9a84-55c93bcecc83",
+				"layer": "Entities",
+				"x": 2376,
+				"y": 616,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "5be8d220-bde0-11f1-9a84-b7746a3fb877",
+				"layer": "Entities",
+				"x": 2520,
+				"y": 488,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "5fae65a0-bde0-11f1-9a84-a9e8c887e455",
+				"layer": "Entities",
+				"x": 3480,
+				"y": 600,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "61f26230-bde0-11f1-9a84-b97dbe5999ad",
+				"layer": "Entities",
+				"x": 3592,
+				"y": 600,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "68952500-bde0-11f1-9a84-fd260ecee504",
+				"layer": "Entities",
+				"x": 4792,
+				"y": 616,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "6bc5f290-bde0-11f1-9a84-35fe34a4c9d3",
+				"layer": "Entities",
+				"x": 5688,
+				"y": 616,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
+			},
+			{
+				"id": "Enemy",
+				"iid": "70b5d540-bde0-11f1-9a84-65bb5a50a920",
+				"layer": "Entities",
+				"x": 4472,
+				"y": 616,
+				"width": 16,
+				"height": 16,
+				"color": 12470831,
+				"customFields": {
+					"EntityType": "PNJ"
+				}
 			}
 		]
 	}

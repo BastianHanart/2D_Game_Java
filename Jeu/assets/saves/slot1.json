@@ -1,14 +1,9 @@
 {
-"level": 3,
-"x": 529.40607,
-"y": 275,
+"x": 3350.8115,
+"y": 896,
 "hp": 100,
-"playerLevel": 36,
-"points": 32,
-"talents": [
-	"Dash",
-	"DoubleJump"
-],
-"playTime": 289.6421,
-"timestamp": 1792691641732
+"playerLevel": 3,
+"points": 2,
+"playTime": 25.947382,
+"timestamp": 1792751713399
 }

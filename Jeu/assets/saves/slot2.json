@@ -1,9 +1,12 @@
 {
-"x": 1218.7161,
+"x": 6102.732,
 "y": 512,
-"hp": 100,
-"playerLevel": 2,
-"points": 1,
-"playTime": 4.527623,
-"timestamp": 1792692155816
+"hp": 75,
+"playerLevel": 6,
+"points": 4,
+"talents": [
+	"Damage_1"
+],
+"playTime": 25.483055,
+"timestamp": 1792751754312
 }
