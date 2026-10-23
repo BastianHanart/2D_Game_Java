@@ -21,6 +21,8 @@ public class Settings {
 
     public static int second_attackKey = Input.Keys.E;
 
+    public static int health_potion_key = Input.Keys.H;
+
     public static int menuKey = Input.Keys.ESCAPE;
 
     public static int TalentTree = Input.Keys.M;

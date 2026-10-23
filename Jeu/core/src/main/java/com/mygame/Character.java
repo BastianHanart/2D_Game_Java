@@ -17,6 +17,16 @@ public class Character {
     //                 STATS
     // ===========================================
 
+    protected int HP_Potion = 1;
+    
+    public int getHP_Potion(){
+        return this.HP_Potion;
+    }
+    public void setHP_Potion(int Potions){
+        this.HP_Potion += Potions;
+    }
+
+    protected int Damage_Potion = 1;
     protected float HPMax = 100;
     protected float HP = 100;
     protected int damage = 5;
@@ -202,10 +212,12 @@ public class Character {
             this.HP -= 10;
         }
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.H)) {
-            this.HP += 10;
+        if (Gdx.input.isKeyJustPressed(Settings.health_potion_key)) {
+            if (this.HP_Potion > 0){
+                this.HP_Potion--;
+                this.HP += 25;
+            }
         }
-
 
         if (Gdx.input.isKeyJustPressed(Settings.menuKey)) {
             game.setScreen(new MenuScreen(game));
