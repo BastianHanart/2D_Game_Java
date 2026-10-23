@@ -146,6 +146,139 @@
 					}] }],
 					"__worldX": 1511,
 					"__worldY": 2079
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [148,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "56d9f5c0-bde0-11f1-9a84-55c93bcecc83",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [2376,616],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 2381,
+					"__worldY": 2088
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [157,30],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "5be8d220-bde0-11f1-9a84-b7746a3fb877",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [2520,488],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 2525,
+					"__worldY": 1960
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [217,37],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "5fae65a0-bde0-11f1-9a84-a9e8c887e455",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [3480,600],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 3485,
+					"__worldY": 2072
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [224,37],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "61f26230-bde0-11f1-9a84-b97dbe5999ad",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [3592,600],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 3597,
+					"__worldY": 2072
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [299,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "68952500-bde0-11f1-9a84-fd260ecee504",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [4792,616],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 4797,
+					"__worldY": 2088
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [355,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "6bc5f290-bde0-11f1-9a84-35fe34a4c9d3",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [5688,616],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 5693,
+					"__worldY": 2088
+				},
+				{
+					"__identifier": "Enemy",
+					"__grid": [279,38],
+					"__pivot": [0.5,0.5],
+					"__tags": [],
+					"__tile": null,
+					"__smartColor": "#BE4A2F",
+					"iid": "70b5d540-bde0-11f1-9a84-65bb5a50a920",
+					"width": 16,
+					"height": 16,
+					"defUid": 23,
+					"px": [4472,616],
+					"fieldInstances": [{ "__identifier": "EntityType", "__type": "LocalEnum.EntityType", "__value": "PNJ", "__tile": null, "defUid": 27, "realEditorValues": [{
+						"id": "V_String",
+						"params": ["PNJ"]
+					}] }],
+					"__worldX": 4477,
+					"__worldY": 2088
 				}
 			]
 		},

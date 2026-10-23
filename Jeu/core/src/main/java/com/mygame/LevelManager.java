@@ -72,6 +72,8 @@ public class LevelManager {
             }
             JsonValue enemies = entities.get("Enemy");
 
+            int pnjCount = 0; 
+
             if (enemies != null) {
                 for (JsonValue enemy : enemies) {
 
@@ -92,7 +94,10 @@ public class LevelManager {
                         monster = new Fantome(game);
                     }
                     else if (type.equals("PNJ")) {
-                        villageois = new Villageois(game);
+                        JsonValue fields = enemy.get("customFields");
+                        int variant = fields.getInt("Variant", pnjCount);   // champ LDtk, sinon automatique
+                        villageois = new Villageois(game, variant);
+                        pnjCount++;
                     }
 
                     else if (type.equals("Boss")) {

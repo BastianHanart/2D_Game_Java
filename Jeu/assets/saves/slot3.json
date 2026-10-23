@@ -1,22 +1,14 @@
 {
 "level": 4,
-"x": 1874.8926,
-"y": 140,
-"hp": 250,
-"playerLevel": 85,
-"points": 66,
+"x": 2800.1433,
+"y": 375.80002,
+"hp": 60,
+"playerLevel": 26,
+"points": 22,
 "talents": [
 	"Dash",
-	"DoubleJump",
-	"HPMax_1",
-	"HPMax_2",
-	"HPMax_3",
-	"HPMax_4",
-	"HPMax_5",
-	"Damage_1",
-	"Damage_2",
-	"Damage_3"
+	"DoubleJump"
 ],
-"playTime": 524.3437,
-"timestamp": 1792694644604
+"playTime": 253.00916,
+"timestamp": 1792752761105
 }
