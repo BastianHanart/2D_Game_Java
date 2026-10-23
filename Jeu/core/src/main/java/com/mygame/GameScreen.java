@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
         healthBar = new HealthBar();
         if (loaded != null) {
             character.setPosition(loaded.x, loaded.y);
+            character.setHP_Potion(loaded.health_potion);
             character.setHP(loaded.hp);
         } else {
             character.setPosition(150, 700);
