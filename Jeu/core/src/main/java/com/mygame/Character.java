@@ -17,11 +17,12 @@ public class Character {
     //                 STATS
     // ===========================================
 
-    protected int HP_Potion = 1;
-    
+    protected int HP_Potion;
+
     public int getHP_Potion(){
         return this.HP_Potion;
     }
+
     public void setHP_Potion(int Potions){
         this.HP_Potion += Potions;
     }
@@ -210,6 +211,10 @@ public class Character {
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.G)) {
             this.HP -= 10;
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
+            this.HP_Potion += 1;
         }
 
         if (Gdx.input.isKeyJustPressed(Settings.health_potion_key)) {
