@@ -3,6 +3,7 @@ package com.mygame;
 public class SaveData {
     public int version = 1;
     public int level = 1;
+    public int health_potion = 1;
     public float x, y;
     public float hp;
     public int playerLevel = 1;
