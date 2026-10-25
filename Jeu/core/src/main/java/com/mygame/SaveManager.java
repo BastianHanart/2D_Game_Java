@@ -57,6 +57,7 @@ public class SaveManager {
         data.x = player.getX();
         data.y = player.getY();
         data.health_potion = player.getHP_Potion();
+        data.damage_potion = player.getDamage_Potion();
         data.hp = player.isDead() ? player.getHPMax() : player.getHP();
         data.playerLevel = GameState.niveau;
         data.xp = GameState.xp;

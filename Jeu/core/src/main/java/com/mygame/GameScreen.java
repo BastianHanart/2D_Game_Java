@@ -22,6 +22,8 @@ public class GameScreen implements Screen {
     private static final float BACKGROUND_HEIGHT_FACTOR = 1.3f;
     private static final float BACKGROUND_WIDTH_FACTOR = 1.2f;
     private HealthBar healthBar;
+    private PotionHUD potionHUD;
+    private XPBar xpBar;
     private boolean playerAttackHit = false;
 
     private final SaveData loaded;
@@ -46,9 +48,12 @@ public class GameScreen implements Screen {
         character = new Character(game);
         level = LevelManager.loadLevel(currentLevel, game);
         healthBar = new HealthBar();
+        potionHUD = new PotionHUD();
+        xpBar = new XPBar();
         if (loaded != null) {
             character.setPosition(loaded.x, loaded.y);
             character.setHP_Potion(loaded.health_potion);
+            character.setDamage_Potion(loaded.damage_potion);
             character.setHP(loaded.hp);
         } else {
             character.setPosition(150, 700);
@@ -90,7 +95,7 @@ public class GameScreen implements Screen {
                 currentLevel = currentLevel - 1;
                 changeLevel(currentLevel, true);
             } else {
-                body.x = body.w / 2f;   // mur invisible au bord du niveau 1
+                body.x = body.w / 2f;
             }
         }
     }
@@ -100,7 +105,7 @@ public class GameScreen implements Screen {
         if (p != null) {
             character.setPosition(p.x, p.y);
         } else {
-            character.setPosition(150, 700); // secours si le point n'existe pas
+            character.setPosition(150, 700);
         }
     }
 
@@ -159,6 +164,8 @@ public class GameScreen implements Screen {
                 monster.takeDamage(character.getDamage());
                 playerAttackHit = true;
                 if (monster.isDead()) {
+                    character.setHP_Potion(character.getHP_Potion() + 1);
+                    character.setDamage_Potion(character.getDamage_Potion() + 1);
                     boolean niveauGagne = GameState.addXp(monster.getXPReward());
                     if (niveauGagne) {
                         character.recalculerStats();
@@ -219,6 +226,8 @@ public class GameScreen implements Screen {
         float posX = viewLeft + margeX;
         float posY = viewTop - margeY - healthBar.getHeightHealthBar();
         healthBar.draw(batch, posX, posY, character.getHP(), character.getHPMax());
+        xpBar.draw(batch, posX + 10, posY - 10 - xpBar.getHeight());
+        potionHUD.draw(batch, posX + 10, posY - 10 - xpBar.getHeight() - 15, character);
         batch.end();
     }
 
@@ -287,5 +296,7 @@ public class GameScreen implements Screen {
         for (Villageois pnj : villageois)
             pnj.dispose();
         level.dispose();
+        potionHUD.dispose();
+        xpBar.dispose();
     }
 }

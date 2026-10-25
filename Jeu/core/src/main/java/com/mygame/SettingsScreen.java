@@ -28,14 +28,8 @@ public class SettingsScreen implements Screen {
     private Skin skin;
     private Texture background;
     private Label backLabel;
-
-    // Permet de savoir si on attend une nouvelle touche
     private boolean waitingForKey = false;
-
-    // Touche actuellement en train d'être modifiée
     private String keyToChange = "";
-
-    // Bouton actuellement utilisé pour changer une touche
     private TextButton waitingButton;
     private ScrollPane scrollPane;
     private TextButton backButton;
@@ -104,13 +98,13 @@ public class SettingsScreen implements Screen {
 
         TextButton.TextButtonStyle buttonStyle = new TextButton.TextButtonStyle();
 
-        // Etat normal
+        // normal
         buttonStyle.up = buttonDrawable;
 
-        // Etat quand la souris passe dessus
+        // over
         buttonStyle.over = buttonDrawable;
 
-        // Etat quand on clique
+        // cliqué
         buttonStyle.down = buttonDrawable;
 
         // Police
@@ -169,6 +163,7 @@ public class SettingsScreen implements Screen {
         panel.add(createKeyRow("DASH",Settings.dashKey,"dash")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("ATTAQUE",Settings.second_attackKey,"attack")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("POTION DE VIE",Settings.health_potion_key,"Use health potion")).width(600).height(70).padBottom(10).row();
+        panel.add(createKeyRow("POTION DE DEGATS",Settings.damage_potion_key,"Use damage potion")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("MENU",Settings.menuKey,"menu")).width(600).height(70).padBottom(10).row();
         panel.add(createKeyRow("ARBRE DE TALENT",Settings.TalentTree,"TalentTree")).width(600).height(70).padBottom(30).row();
         
@@ -255,8 +250,6 @@ public class SettingsScreen implements Screen {
         });
 
         stage.addActor(backLabel);
-
-        // SCROLLPANE
         scrollPane = new ScrollPane(panel);
         scrollPane.setFadeScrollBars(false);
         scrollPane.setScrollingDisabled(true, false);
@@ -273,13 +266,11 @@ public class SettingsScreen implements Screen {
     // =========================================================
 
     private void updateLayout(float width, float height) {
-        // Zone sombre du cadre, en proportion de la fenêtre
         float areaW = width * 0.55f;
         float areaH = height * 0.50f;
         float areaX = (width - areaW) / 2f;
-        float areaY = height * 0.19f;   // bas de la zone (origine en bas à gauche)
+        float areaY = height * 0.19f;
         scrollPane.setBounds(areaX, areaY, areaW, areaH);
-        // Bouton RETOUR centré sur la pierre du bas
         backLabel.pack();
         backLabel.setPosition(
             (width - backLabel.getWidth()) / 2f,
@@ -292,20 +283,10 @@ public class SettingsScreen implements Screen {
         int key,
         final String keyName
     ) {
-
         Table row = new Table();
-
-        // -----------------------------------------------------
-        // NOM
-        // -----------------------------------------------------
-
         Label label = new Label(name,skin);
         label.setFontScale(1.2f);
         row.add(label).left().expandX().padLeft(20);
-
-        // -----------------------------------------------------
-        // BOUTON
-        // -----------------------------------------------------
 
         final TextButton keyButton = new TextButton(getKeyName(key),skin);
         keyButton.getLabel().setFontScale(1.1f);
@@ -313,10 +294,6 @@ public class SettingsScreen implements Screen {
         float buttonWidth = 200f;
         float buttonHeight = buttonWidth * 389f / 871f;
         row.add(keyButton).width(buttonWidth).height(buttonHeight).right().padRight(20);
-
-        // -----------------------------------------------------
-        // CLIC
-        // -----------------------------------------------------
 
         keyButton.addListener(
             new ChangeListener() {
@@ -364,33 +341,15 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void render(float delta) {
-
-        // -----------------------------------------------------
-        // BACKGROUND
-        // -----------------------------------------------------
-
         Gdx.gl.glClearColor(0,0,0,1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-        // -----------------------------------------------------
-        // DESSIN DU BACKGROUND
-        // -----------------------------------------------------
-
         stage.getBatch().begin();
         stage.getBatch().draw(background,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         stage.getBatch().end();
 
-        // -----------------------------------------------------
-        // TOUCHE EN ATTENTE
-        // -----------------------------------------------------
-
         if (waitingForKey) {
             checkForKey();
         }
-
-        // -----------------------------------------------------
-        // STAGE
-        // -----------------------------------------------------
 
         stage.act(delta);
         stage.draw();
@@ -405,20 +364,11 @@ public class SettingsScreen implements Screen {
             if (
                 Gdx.input.isKeyJustPressed(key)
             ) {
-
-                // ---------------------------------------------
-                // GAUCHE
-                // ---------------------------------------------
-
                 if (
                     keyToChange.equals("left")
                 ) {
                     Settings.leftKey = key;
                 }
-
-                // ---------------------------------------------
-                // DROITE
-                // ---------------------------------------------
 
                 else if (
                     keyToChange.equals("right")
@@ -426,19 +376,11 @@ public class SettingsScreen implements Screen {
                     Settings.rightKey = key;
                 }
 
-                // ---------------------------------------------
-                // SAUT
-                // ---------------------------------------------
-
                 else if (
                     keyToChange.equals("jump")
                 ) {
                     Settings.jumpKey = key;
                 }
-
-                // ---------------------------------------------
-                // DASH
-                // ---------------------------------------------
 
                 else if (
                     keyToChange.equals("dash")
@@ -446,19 +388,23 @@ public class SettingsScreen implements Screen {
                     Settings.dashKey = key;
                 }
 
-                // ---------------------------------------------
-                // ATTAQUE
-                // ---------------------------------------------
-
                 else if (
                     keyToChange.equals("attack")
                 ) {
                     Settings.second_attackKey = key;
                 }
 
-                // ---------------------------------------------
-                // MENU
-                // ---------------------------------------------
+                else if (
+                    keyToChange.equals("Use health potion")
+                ) {
+                    Settings.health_potion_key = key;
+                }
+
+                else if (
+                    keyToChange.equals("Use damage potion")
+                ) {
+                    Settings.damage_potion_key = key;
+                }
 
                 else if (
                     keyToChange.equals("menu")
@@ -466,19 +412,11 @@ public class SettingsScreen implements Screen {
                     Settings.menuKey = key;
                 }
 
-                // ---------------------------------------------
-                // COURSE
-                // ---------------------------------------------
-
                 else if (
                     keyToChange.equals("run")
                 ) {
                     Settings.runKey = key;
                 }
-
-                // ---------------------------------------------
-                // FIN
-                // ---------------------------------------------
 
                 waitingForKey = false;
                 keyToChange = "";

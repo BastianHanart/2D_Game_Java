@@ -23,6 +23,8 @@ public class Settings {
 
     public static int health_potion_key = Input.Keys.H;
 
+    public static int damage_potion_key = Input.Keys.J;
+
     public static int menuKey = Input.Keys.ESCAPE;
 
     public static int TalentTree = Input.Keys.M;

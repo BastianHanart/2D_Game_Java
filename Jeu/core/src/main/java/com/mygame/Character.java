@@ -24,10 +24,24 @@ public class Character {
     }
 
     public void setHP_Potion(int Potions){
-        this.HP_Potion += Potions;
+        this.HP_Potion = Potions;
     }
 
-    protected int Damage_Potion = 1;
+    protected int Damage_Potion;
+    protected float damageBuffTimer = 0f;
+
+    public int getDamage_Potion(){
+        return this.Damage_Potion;
+    }
+
+    public void setDamage_Potion(int Potions){
+        this.Damage_Potion = Potions;
+    }
+
+    public float getDamageBuffTimer(){
+        return this.damageBuffTimer;
+    }
+
     protected float HPMax = 100;
     protected float HP = 100;
     protected int damage = 5;
@@ -57,6 +71,10 @@ public class Character {
     private static final float DASH_COOLDOWN = 1.0f;
     private static final float ATTACK_DURATION = 0.2f;
     private static final float LANDING_DURATION = 0.2f;
+
+    private static final float HEAL_POTION_AMOUNT = 25f;
+    public static final float DAMAGE_POTION_DURATION = 30f;
+    public static final float DAMAGE_POTION_MULTIPLIER = 1.5f;
 
     // ---------- Etat ----------
     private final Body body = new Body();
@@ -184,6 +202,7 @@ public class Character {
         // --- Timers ---
         dashCooldownTimer = Math.max(0f, dashCooldownTimer - delta);
         landingTimer = Math.max(0f, landingTimer - delta);
+        damageBuffTimer = Math.max(0f, damageBuffTimer - delta);
 
         if (attacking) {
             attackTimer -= delta;
@@ -217,10 +236,22 @@ public class Character {
             this.HP_Potion += 1;
         }
 
+        if (Gdx.input.isKeyJustPressed(Input.Keys.B)) {
+            this.Damage_Potion += 1;
+        }
+
         if (Gdx.input.isKeyJustPressed(Settings.health_potion_key)) {
             if (this.HP_Potion > 0){
                 this.HP_Potion--;
-                this.HP += 25;
+                this.HP += HEAL_POTION_AMOUNT;
+            }
+        }
+
+        // Boire pendant le buff remet simplement le chrono à 30s
+        if (Gdx.input.isKeyJustPressed(Settings.damage_potion_key)) {
+            if (this.Damage_Potion > 0){
+                this.Damage_Potion--;
+                this.damageBuffTimer = DAMAGE_POTION_DURATION;
             }
         }
 
@@ -321,6 +352,9 @@ public class Character {
         return attacking; 
     }
     public int getDamage() {
+        if (damageBuffTimer > 0f) {
+            return Math.round(damage * DAMAGE_POTION_MULTIPLIER);
+        }
         return damage; 
     }
 

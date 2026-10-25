@@ -9,8 +9,9 @@ public class GameState {
     public static int currentLevel = 1;
     public static float playTime = 0f;
 
+    // +15 XP par niveau (20, 35, 50, 65...) puis bloqué à 100 max
     public static int xpRequis() {
-        return 10;
+        return Math.min(20 + 15 * (niveau - 1), 100);
     }
 
     public static boolean addXp(int montant) {
