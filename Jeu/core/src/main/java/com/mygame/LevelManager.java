@@ -17,7 +17,7 @@ public class LevelManager {
             case 3:  
                 return loadFromLDtk("Level_3", 20, 25f, "Music/Map3.mp3", "Fond_Boss.jpeg", "Foret.png", game);
             case 4:
-                return loadFromLDtk("Level_4", 20, 20f, "Music/Map3.mp3", "Fond_Boss.jpeg", "Foret.png", game);
+                return loadFromLDtk("Level_4", 20, 20f, "Music/MusicBoss.mp3", "Fond_Boss.jpeg", "Foret.png", game);
             default: 
                 return loadFromLDtk("Level_1", 16, 128f, "Music/Map1.mp3", "windrise-background-4k.png", "Decor.png", game);
         }
