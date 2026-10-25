@@ -1,5 +1,8 @@
 package com.mygame;
 
+/**
+ * Représente tous les éléments sauvegarder lorsqu'on quitte la partie en cours
+*/
 public class SaveData {
     public int version = 1;
     public int level = 1;
@@ -14,5 +17,8 @@ public class SaveData {
     public float playTime;
     public long timestamp;
     
+    /**
+     * Sauvegarde des élements
+    */
     public SaveData() {}
 }

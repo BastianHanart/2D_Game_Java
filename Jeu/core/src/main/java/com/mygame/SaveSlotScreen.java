@@ -14,6 +14,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Représente les slots de sauvegarde lorsque qu'on veut lancer une partie
+*/
 public class SaveSlotScreen implements Screen {
     private static final float slot_height = 200f;
     private static final float gap = 20f;
@@ -27,6 +30,11 @@ public class SaveSlotScreen implements Screen {
     private final SaveData[] data = new SaveData[SaveManager.slots];
     private int confirmDelete = -1;
 
+
+    /**
+    * @param game défini la partie dans laquelle les différentes sauvegarde vont être affichées.
+    * @see Game
+    */
     public SaveSlotScreen(Game game) {
         this.game = game;
         background = new Texture("MenuBackground.png");
@@ -71,6 +79,9 @@ public class SaveSlotScreen implements Screen {
         }
     }
 
+    /**
+    * @param delta défini délai de tous les éléments
+    */
     @Override
     public void render(float delta) {
         float mx = Gdx.input.getX();
@@ -135,12 +146,26 @@ public class SaveSlotScreen implements Screen {
         font.draw(batch, "Echap : retour", 20, Gdx.graphics.getHeight() - 20);
         batch.end();
     }
-
+    /**
+    * Resize le visuel
+    * @param w largeur du l'affichage
+    * @param h hauteur du l'affichage
+    */
     @Override public void resize(int w, int h) {}
+    /**
+    * Met pause aux jeu
+    */
     @Override public void pause() {}
     @Override public void resume() {}
+
+    /**
+    * Cache le visuel
+    */
     @Override public void hide() {}
 
+    /**
+    * Supprime les boutons de sauvegarde
+    */
     @Override
     public void dispose() {
         shapes.dispose();

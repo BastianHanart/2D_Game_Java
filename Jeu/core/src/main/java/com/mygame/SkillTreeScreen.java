@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.MathUtils;
 
+/**
+ * Représente l'affichage de l'arbre de compétences du joueur 
+*/
 public class SkillTreeScreen implements Screen {
     private static final float image_width = 2750f;
     private static final float image_height = 1536f;
@@ -30,6 +33,10 @@ public class SkillTreeScreen implements Screen {
     private Texture background;
     private float time;
 
+    /**
+     * @param game partie dans laquelles l'affichage se fait
+     * @param retour écran des compétences
+    */
     public SkillTreeScreen(Game game, Screen retour) {
         this.game = game;
         this.retour = retour;
@@ -68,6 +75,9 @@ public class SkillTreeScreen implements Screen {
         }
     }
 
+    /**
+     * @param delta délai des éléments
+    */
     @Override public void render(float delta) {
         time += delta;
 

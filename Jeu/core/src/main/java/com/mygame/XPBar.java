@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Représente la barre d'XP du joueur
+*/
 public class XPBar {
     private static final float WIDTH = 250f;
     private static final float HEIGHT = 12f;
@@ -15,6 +18,9 @@ public class XPBar {
     private Texture pixel;
     private BitmapFont font;
 
+    /**
+    * @return la barre d'XP du joueur
+    */
     public float getHeight() {
         return HEIGHT;
     }
@@ -29,6 +35,12 @@ public class XPBar {
         font.getData().setScale(1.3f);
     }
 
+    /**
+     * @param batch Sprite de la barre d'XP
+     * @param x position horizontale de la barre
+     * @param y position verticale de la barre
+     * @see SpriteBatch
+     */
     public void draw(SpriteBatch batch, float x, float y) {
         float xpPercent = (float) GameState.xp / GameState.xpRequis();
         if (xpPercent < 0) xpPercent = 0;

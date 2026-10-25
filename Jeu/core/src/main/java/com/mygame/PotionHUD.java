@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Représente l'affichage des potions tout au long du jeu
+*/
 public class PotionHUD {
     private static final float ICON_HEIGHT = 48f;
     private static final float SPACING = 30f;
@@ -18,6 +21,9 @@ public class PotionHUD {
     private final GlyphLayout layout = new GlyphLayout();
     private float iconWidth;
 
+    /**
+    * @return le hauteur de l'affichage
+    */
     public float getHeight() {
         return ICON_HEIGHT;
     }
@@ -30,6 +36,14 @@ public class PotionHUD {
         font.getData().setScale(1.6f);
     }
 
+    /**
+    * @param batch défini le sprite de la plateforme.
+    * @param x position horizontale de la plateforme.
+    * @param y position verticale de la plateforme.
+    * @param character défini le joueur.
+    * @see SpriteBatch
+    * @see Character
+    */
     public void draw(SpriteBatch batch, float x, float y, Character character) {
         float bottom = y - ICON_HEIGHT;
         float textY = bottom + ICON_HEIGHT / 2f + font.getCapHeight() / 2f;
@@ -62,6 +76,9 @@ public class PotionHUD {
         return x + layout.width;
     }
 
+    /**
+    * Supprime de l'écran l'affichage de l'HUD
+    */
     public void dispose() {
         healthPotion.dispose();
         damagePotion.dispose();

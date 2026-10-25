@@ -12,7 +12,7 @@ class MonsterTest {
     @BeforeEach
     void setUp() {
         // Le Game n'est jamais utilisé par la logique testée : null suffit
-        monster = new Monster(null, 10, 25);
+        monster = new Monster(10, 25);
     }
 
     @Test

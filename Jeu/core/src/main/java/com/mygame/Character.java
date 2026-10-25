@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Représente le joueur, le personnage que l'on joue; gère sa position, sa vitesse, sa attaques, sa gestion de vie et ses collisions avec la carte.
+*/
 public class Character {
         
     private Game game;
@@ -19,10 +22,16 @@ public class Character {
 
     protected int HP_Potion;
 
+    /**
+    * @return le nombre de potions de soin.
+    */
     public int getHP_Potion(){
         return this.HP_Potion;
     }
 
+    /**
+    * @param Potions défini le nombre de potions à ajouter.
+    */
     public void setHP_Potion(int Potions){
         this.HP_Potion = Potions;
     }
@@ -30,14 +39,23 @@ public class Character {
     protected int Damage_Potion;
     protected float damageBuffTimer = 0f;
 
+    /**
+    * @return le nombre de potions de dégats.
+    */
     public int getDamage_Potion(){
         return this.Damage_Potion;
     }
 
+    /**
+    * @param Potions défini le nombre de potions à ajouter.
+    */
     public void setDamage_Potion(int Potions){
         this.Damage_Potion = Potions;
     }
 
+    /**
+    * @return le temps du buff de la potion de dégats.
+    */
     public float getDamageBuffTimer(){
         return this.damageBuffTimer;
     }
@@ -47,13 +65,23 @@ public class Character {
     protected int damage = 5;
     protected int range = 200;
 
+    /**
+    * @return les HPMax du joueur
+    */
     public float getHPMax() { 
         return this.HPMax; 
     }
+
+    /**
+    * @return les HP actuel du joueur
+    */
     public float getHP() { 
         return this.HP; 
     }
 
+    /**
+    * @param hp défini la vie du joueur.
+    */
     public void setHP(float hp) {
         this.HP = Math.min(hp, HPMax);
     }
@@ -117,6 +145,10 @@ public class Character {
     //              CONSTRUCTEUR                   \\
     // =========================================== \\
 
+    /**
+    * @param game défini la partie dans laquelle nous nous trouvons.
+    * @see Game
+    */
     public Character(Game game) {
         this.game = game;
         sheetWalk = new Texture("Personnage_Marche.png");
@@ -159,23 +191,42 @@ public class Character {
     // =========================================== \\
     //                POSITION                     \\
     // =========================================== \\
-
+    
+    /**
+    * @return le body du joueur
+    * @see Body
+    */
     public Body getBody() { 
         return body; 
     }
+    
+    /**
+    * @return la position horizontale du joueur
+    */
     public float getX() { 
         return body.x; 
     }
+
+    /**
+    * @return la position verticale du joueur
+    */
     public float getY() {
         return body.y;
     }
 
+    /**
+    * @param x défini la nouvelle position horizontale du joueur.
+    * @param y défini la nouvelle position verticale du joueur.
+    */
     public void setPosition(float x, float y) {
         body.x = x;
         body.y = y;
         body.vy = 0;
     }
 
+    /**
+    * @return true si le joueur est mort.
+    */
     public boolean isDead() {
         return HP <= 0;
     }
@@ -190,6 +241,11 @@ public class Character {
     //                  UPDATE                     \\
     // =========================================== \\
 
+    /**
+    * @param delta défini le délai des actions.
+    * @param map défini les collision du niveau actuel.
+    * @see CollisionMap
+    */
     public void update(float delta, CollisionMap map) {
 
         if (this.HP > this.HPMax){
@@ -337,20 +393,33 @@ public class Character {
     //                  HITBOX                     \\
     // =========================================== \\
 
-    /** Zone où le personnage peut recevoir des dégâts. */
+    /**
+    * @return la zone de collision du joueur via rect() dans Body
+    * @see Body
+    */
     public Rectangle getHurtbox() { 
         return body.rect(); 
     }
 
-    /** Zone qui blesse les monstres (seulement pendant l'attaque). */
+    /**
+    * @return la zone d'attaque du joueur.
+    * @see Body
+    */
     public Rectangle getAttackBox() {
         float ax = facingRight ? body.x + body.w / 2f : body.x - body.w / 2f - range;
         return new Rectangle(ax, body.y + 20f, range, body.h - 40f);
     }
 
+    /**
+    * @return true so le joueur est en train d'attaquer
+    */
     public boolean isAttacking() { 
         return attacking; 
     }
+
+    /**
+    * @return le nombre de degats de l'attaque du joueur
+    */
     public int getDamage() {
         if (damageBuffTimer > 0f) {
             return Math.round(damage * DAMAGE_POTION_MULTIPLIER);
@@ -358,6 +427,9 @@ public class Character {
         return damage; 
     }
 
+    /**
+    * @param damage défini les dégats subits par le joueur lors d'une attaque.
+    */
     public void takeDamage(int damage) {
         this.HP -= damage;
 
@@ -370,6 +442,10 @@ public class Character {
     //                  RENDU                      \\
     // =========================================== \\
 
+    /**
+    * @param batch défini le sprite du personnage.
+    * @see SpriteBatch
+    */
     public void render(SpriteBatch batch) {
         TextureRegion frame;
 

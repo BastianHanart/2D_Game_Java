@@ -22,6 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/**
+ * Représente l'affichage des paramètres des touches et de l'écran
+*/
 public class SettingsScreen implements Screen {
     private final Game game;
     private Stage stage;
@@ -32,8 +35,11 @@ public class SettingsScreen implements Screen {
     private String keyToChange = "";
     private TextButton waitingButton;
     private ScrollPane scrollPane;
-    private TextButton backButton;
 
+    /**
+    * @param game défini dans quelle partie affichée.
+    * @see Game
+    */
     public SettingsScreen(Game game) {
         this.game = game;
 
@@ -88,9 +94,6 @@ public class SettingsScreen implements Screen {
 
         Texture buttonTexture = new Texture("removebg(1).png");
         Drawable buttonDrawable = new TextureRegionDrawable( new TextureRegion(buttonTexture));
-
-        float width = 200f;
-        float height = width * 389f / 871f;
 
         // =====================================================
         // STYLE DU BOUTON
@@ -339,6 +342,9 @@ public class SettingsScreen implements Screen {
     //                      INPUT
     // =========================================================
 
+    /**
+    * @param delta défini la délai des éléments
+    */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0,0,0,1);
@@ -435,6 +441,11 @@ public class SettingsScreen implements Screen {
     //                       RESIZE
     // =========================================================
 
+    
+    /**
+    * @param width défini la largeur de l'écran
+    * @param height défini la hauteur de l'écran
+    */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);

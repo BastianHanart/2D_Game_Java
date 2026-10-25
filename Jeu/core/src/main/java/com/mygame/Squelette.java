@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Représente les squelletes, un type de monstre présent dans le jeu; gère leur position, leur vitesse, leurs attaques, leur gestion de vie et les collisions avec la carte.
+*/
 public class Squelette extends Monster {
 
     private final Texture sheetWalk;
@@ -36,8 +39,12 @@ public class Squelette extends Monster {
 
     private int idleDirection = 1;
 
+    /**
+    * @param game défini la partie dans laquelle le monstre va être créée.
+    * @see Game
+    */
     public Squelette(Game game) {
-        super(game, 10, 10);
+        super(10, 10);
 
         sheetWalk = new Texture("Monstres.png");
 
@@ -88,6 +95,11 @@ public class Squelette extends Monster {
         return attackFrame2;
     }
 
+    /**
+    * @param delta défini le delai de chaque attaque.
+    * @param map défini les collisions de la map avec lesquelles le monstre intéragi.
+    * @param player défini le joueur.
+    */
     public void update(float delta, CollisionMap map, Character player) {
 
     // --- Mise à jour du délai entre les attaques ---
@@ -165,6 +177,10 @@ public class Squelette extends Monster {
     body.x = map.clampX(body.x, body.w / 2f);
 }
 
+    /**
+    * @param batch défini le sprite du monstre.
+    * @see SpriteBatch
+    */
     public void render(SpriteBatch batch) {
 
         TextureRegion frame;
@@ -188,6 +204,9 @@ public class Squelette extends Monster {
         }
     }
 
+    /**
+    * Supprime de l'écran le monstre
+    */
     public void dispose() {
         sheetWalk.dispose();
     }

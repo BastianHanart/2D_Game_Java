@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Représente toutes les compétences débloquables par le joueur 
+*/
 public enum Talent {
     // Branche de envie (en haut à droite)
     Dash("Dash", 1, Collections.emptyList(), 1703, 540),

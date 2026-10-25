@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Représente les Fantômes, un type de monstre présent dans le jeu; gère leur position, leur vitesse, leurs attaques, leur gestion de vie et les collisions avec la carte.
+*/
 public class Fantome extends Monster {
 
     private final Texture sheetWalk;
@@ -41,8 +44,13 @@ public class Fantome extends Monster {
     private float idleDirX = 0f;
     private float idleDirY = 0f;
 
+
+    /**
+    * @param game défini la partie dans laquelle le monstre va être créée.
+    * @see Game
+    */
     public Fantome(Game game) {
-        super(game, 20, 20);
+        super(20, 20);
 
         sheetWalk = new Texture("Monstres.png");
 
@@ -96,6 +104,11 @@ public class Fantome extends Monster {
         return attackFrame2;
     }
 
+    /**
+    * @param delta défini le delai de chaque attaque.
+    * @param map défini les collisions de la map avec lesquelles le monstre intéragi.
+    * @param player défini le joueur.
+    */
     public void update(float delta, CollisionMap map, Character player) {
 
         // Mémorise la hauteur de départ comme "sol" du fantôme
@@ -183,6 +196,10 @@ public class Fantome extends Monster {
         }
     }
 
+    /**
+    * @param batch défini le sprite du monstre.
+    * @see SpriteBatch
+    */
     public void render(SpriteBatch batch) {
 
         TextureRegion frame;
@@ -206,6 +223,9 @@ public class Fantome extends Monster {
         }
     }
 
+    /**
+    * Supprime de l'écran le monstre
+    */
     public void dispose() {
         sheetWalk.dispose();
     }

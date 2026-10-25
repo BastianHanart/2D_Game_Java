@@ -5,6 +5,9 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter;
 
+/**
+ * Représente l'écriture de la sauvegarde dans le dossier save
+*/
 public class SaveManager {
 
     public static final int slots = 5;
@@ -20,10 +23,18 @@ public class SaveManager {
         return json;
     }
 
+    /**
+     * @param slot fichier de sauvegarde
+     * @return true si le fichier existe déjà
+    */
     public static boolean exists(int slot) {
         return file(slot).exists();
     }
 
+    /**
+     * @param slot fichier de sauvegarde
+     * @return la sauvegarde en json
+    */
     public static SaveData read(int slot) {
         FileHandle f = file(slot);
         if (!f.exists()) return null;
@@ -35,6 +46,10 @@ public class SaveManager {
         }
     }
 
+    /**
+     * @param slot fichier de sauvegarde
+     * @param data donner à écrire dans le fichier
+    */
     public static void write(int slot, SaveData data) {
         try {
             FileHandle tmp = Gdx.files.local("saves/slot" + slot + ".tmp");
@@ -45,10 +60,17 @@ public class SaveManager {
         }
     }
 
+    /**
+     * @param slot fichier à supprimer
+    */
     public static void delete(int slot) {
         file(slot).delete();
     }
 
+    /**
+     * @param player joueur à sauvegarder
+     * @param levelNumber Niveau actuel à sauvergarder pour revenir à l'ancienne position
+    */
     public static void saveCurrent(Character player, int levelNumber) {
         int slot = GameState.currentSlot;
         if (slot < 1) return;
@@ -71,7 +93,11 @@ public class SaveManager {
     // ==================================== \\
     //              Chargement              \\
     // ==================================== \\
-    
+        
+    /**
+     * @param slot fichier de sauvegarde
+     * @param data donner à charger
+    */
     public static void apply(int slot, SaveData data) {
         GameState.currentSlot = slot;
         GameState.currentLevel = data.level;

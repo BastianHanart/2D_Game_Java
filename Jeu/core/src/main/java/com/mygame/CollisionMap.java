@@ -2,6 +2,9 @@ package com.mygame;
 
 import com.badlogic.gdx.math.MathUtils;
 
+/**
+ * Représente les collisions sur les différents niveaux; gère leurs position, les réactions avec des entités
+*/
 public class CollisionMap {
     public static final float NO_GROUND = Float.NEGATIVE_INFINITY;
     public static final int SOLID = 1, ONE_WAY = 8;
@@ -24,6 +27,10 @@ public class CollisionMap {
     private final int rows, cols;
     private final float cell, height;
 
+    /**
+    * @param grid permet de définir la grille 2D entière des collisions du niveau actuel.
+    * @param cell permet de définir chaque cellule de colission du niveau actuel.
+    */
     public CollisionMap(int[][] grid, float cell) {
         this.grid = grid;
         this.rows = grid.length;
@@ -47,9 +54,13 @@ public class CollisionMap {
     }
 
     /**
-     * Meilleur sol sous les pieds, entre minY et maxY.
-     * Les plateformes (8) ne comptent que si on était AU-DESSUS à la frame précédente.
-     */
+    * @param x permet de définir la position horizontale de la collision.
+    * @param minY permet de définir la collission la plus haute.
+    * @param maxY permet de définir la collission la plus basse.
+    * @param prevFeetY permet de définir chaque cellule de colission du niveau actuel.
+    * @param dropThrough permet de savoir si on traverse ou non les élements (plateforme oui, sol non).
+    * @return un nombre flottant de la position veticale de la première plateforme sur laquelle on va s'arreter et se poser.
+    */
     public float findGround(float x, float minY, float maxY, float prevFeetY, boolean dropThrough) {
         int col = (int) Math.floor(x / cell);
         int rowTop = (int) Math.floor((height - maxY) / cell);
@@ -65,7 +76,14 @@ public class CollisionMap {
         return best;
     }
 
-    /** Déplace horizontalement en s'arrêtant contre les blocs pleins. Retourne le nouveau x. */
+    /**
+    * @param x permet de définir la position horizontale de l'entité.
+    * @param dx permet de définir la vitesse horizontale de l'entité.
+    * @param feetY permet de définir la position vertical du bas de l'entité.
+    * @param halfW permet de définir le milieu horizontale de l'entité.
+    * @param bodyH permet de définir la hauteur du personnage.
+    * @return un nombre flottant de la nouvelle position horizontale du joueur.
+    */
     public float moveX(float x, float dx, float feetY, float halfW, float bodyH) {
         if (dx == 0) return x;
         float nx = x + dx;
@@ -86,11 +104,21 @@ public class CollisionMap {
         }
         return nx;
     }
-
+    
+    /**
+    * @param wx position horizontale de l'élement en dessous de l'entité.
+    * @param wy position vertical de l'élement en dessous de l'entité.
+    * @return true si l'élément en dessous du joueur est solide (donc collision).
+    */
     public boolean isSolid(float wx, float wy) {
         return tileAt((int) Math.floor(wx / cell), (int) Math.floor((height - wy) / cell)) == SOLID;
     }
 
+    /**
+    * @param x position horizontale de l'entité.
+    * @param halfW Moitié de la largeur de l'entité.
+    * @return un clamp (limite d'une valeur entre un minimum et un maximum) de la valeur x
+    */
     public float clampX(float x, float halfW) {
         float minX = halfW;
         float maxX = cols * cell - halfW;

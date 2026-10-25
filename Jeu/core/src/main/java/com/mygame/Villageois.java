@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+/**
+ * Représente les villageois, personnages non joueur et pacifique du jeu; gère leur position, leur vitesse, leurs attaques, leur gestion de vie et leurs collisions avec la carte.
+*/
 public class Villageois {
     private static final int START_X = 50, START_Y = 20;   // coin haut-gauche du 1er sprite
     private static final int SPRITE_W = 500, SPRITE_H = 320;
@@ -18,13 +21,15 @@ public class Villageois {
     private static int refCount = 0;
     private final TextureRegion idleFrame;
     private boolean facingRight = true;
-    private Game game;
 
     protected final Body body = new Body();
 
-
+    /**
+    * @param game défini la partie dans laquelle nous nous trouvons.
+    * @param variant défini le numéro du villageois 
+    * @see Game
+    */
     public Villageois(Game game, int variant) {
-        this.game = game;
 
         if (sheetWalk == null) sheetWalk = new Texture("PNJ.png");
         refCount++;
@@ -39,18 +44,31 @@ public class Villageois {
                 SPRITE_W, SPRITE_H);
     }
 
+    /**
+    * @return la hitbox des PNJ
+    */
     public Rectangle getHitbox() {
         return body.rect();
     }
 
+    /**
+    * @return la position horizontale du PNJ
+    */
     public float getX() {
         return body.x;
     }
 
+    /**
+    * @return la position verticale du PNJ
+    */
     public float getY() {
         return body.y;
     }
 
+    /**
+    * @param x défini nouvelle position horizontale du PNJ
+    * @param y défini nouvelle position verticale du PNJ
+    */
     public void setPosition(float x, float y) {
         body.x = x;
         body.y = y;
@@ -58,6 +76,13 @@ public class Villageois {
         body.onGround = false;
     }
 
+    /**
+    * @param delta défini delta des éléments
+    * @param map défini collision du niveau actuel
+    * @param player défini joueur
+    * @see CollisionMap
+    * @see Character
+    */
     public void update(float delta, CollisionMap map, Character player) {
         float dx = 0f;
         body.move(map, dx, delta, false);
@@ -71,6 +96,10 @@ public class Villageois {
         body.x = map.clampX(body.x, body.w / 2f);
     }
 
+    /**
+    * @param batch défini le sprite du personnage.
+    * @see SpriteBatch
+    */
     public void render(SpriteBatch batch) {
 
         TextureRegion frame = idleFrame;

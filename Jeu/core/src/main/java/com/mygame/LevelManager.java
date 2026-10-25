@@ -6,8 +6,16 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
+/**
+ * Représente la gestion du niveau actuel : Musique, visuels, collisions
+*/
 public class LevelManager {
 
+
+    /**
+    * @param levelNumber nombre du niveau actuel.
+    * @param game défini la partie dans laquelle nous nous trouvons.
+    */
     public static Level loadLevel(int levelNumber, Game game) {
         switch (levelNumber) {
             case 1:  

@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Représente l'écran du jeu, l'affichage; Gère les décors, la map, les monstres le joueurs, les paramètres etc...
+*/
 public class GameScreen implements Screen {
 
     private Game game;
@@ -28,8 +31,20 @@ public class GameScreen implements Screen {
 
     private final SaveData loaded;
 
-    public GameScreen(Game game) { this(game, null); }
+    /**
+    * @param game défini la partie que le jeu va afficher.
+    * @see Game
+    */
+    public GameScreen(Game game) { 
+        this(game, null); 
+    }
 
+    /**
+    * @param game défini la partie que le jeu va afficher.
+    * @param game défini si la partie à dejà des informations sauvegarder.
+    * @see Game
+    * @see SaveData
+    */
     public GameScreen(Game game, SaveData loaded) {
         this.game = game;
         this.loaded = loaded;
@@ -136,6 +151,9 @@ public class GameScreen implements Screen {
     //                  RENDER
     // ===========================================
 
+    /**
+    * @param delta défini le délai des actions.
+    */
     @Override
     public void render(float delta) {
         GameState.playTime += delta;
@@ -147,6 +165,12 @@ public class GameScreen implements Screen {
         }
 
         else {
+            com.badlogic.gdx.math.Vector2 p = level.getSpawn("Left");
+            if (p != null) {
+                character.setPosition(p.x, p.y);
+            } else {
+                character.setPosition(150, 700); // secours si le point n'existe pas
+            }
             level.getMusic().stop();
             game.setScreen(new MenuScreen(game));
         }
@@ -259,6 +283,10 @@ public class GameScreen implements Screen {
         batch.draw(background, viewLeft - tx * extraX, viewBottom - ty * extraY, bgWidth, bgHeight);
     }
 
+    /**
+    * @param width défini la largeur de la camera
+    * @param height défini la hauteur de la camera
+    */
     @Override
     public void resize(int width, int height) {
         camera.viewportWidth = width;
@@ -278,6 +306,9 @@ public class GameScreen implements Screen {
         if (character != null) SaveManager.saveCurrent(character, currentLevel);
     }
 
+    /**
+    * Supprime de l'écran tous les éléments afficher lors du jeu (monstres, sprites, niveau, potions ...)
+    */
     @Override
     public void dispose() {
         batch.dispose();

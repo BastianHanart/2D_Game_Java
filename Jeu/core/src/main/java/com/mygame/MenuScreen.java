@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+/**
+ * Représente l'affichage des menus, cet écran est visible lors du lancement du jeu ou lorsqu'on appuie sur echap
+*/
 public class MenuScreen implements Screen {
     private Game game;
     private SpriteBatch batch;
@@ -15,6 +18,9 @@ public class MenuScreen implements Screen {
     private Texture menuButton;
     private Texture exitButton;
 
+    /**
+    * @param game défini la partie dans laquelle nous nous trouvons.
+    */
     public MenuScreen(Game game) {
         this.game = game;
         batch = new SpriteBatch();
@@ -24,6 +30,9 @@ public class MenuScreen implements Screen {
         exitButton = new Texture("BoutonExit.png");
     }
 
+    /**
+    * @param delta défini le delai de chaque attaque.
+    */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -129,6 +138,9 @@ public class MenuScreen implements Screen {
             }
         }
     }
+    /**
+    * Supprime de l'écran le monstre
+    */
     @Override
     public void dispose() {
         batch.dispose();
@@ -136,12 +148,26 @@ public class MenuScreen implements Screen {
         playButton.dispose();
     }
 
+    /**
+    * Affiche le visuel
+    */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(null);
     }
+    /**
+    * Resize le visuel
+    * @param width largeur du l'affichage
+    * @param height hauteur du l'affichage
+    */
     @Override public void resize(int width, int height) {}
+    /**
+    * Met pause aux jeu
+    */
     @Override public void pause() {}
     @Override public void resume() {}
+    /**
+    * Cache le visuel
+    */
     @Override public void hide() {}
 }

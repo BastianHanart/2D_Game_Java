@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
+/**
+ * Représente le péché capital Envie, le premier boss et un type de monstre présent dans le jeu; gère sa position, sa vitesse, ses attaques, sa gestion de vie et ses collisions avec la carte.
+*/
 public class Envie extends Monster {
 
     private static final int LIFE_MAX = 300;
@@ -54,18 +57,29 @@ public class Envie extends Monster {
     private final Array<Monster> summons = new Array<>();
     private boolean summonHit;
 
+    /**
+    * @param game défini dans quelle partie le monstre est crée.
+    * @see CollisionMap
+    */
     public Envie(Game game) {
-        super(game, LIFE_MAX, 100);
+        super(LIFE_MAX, 100);
         this.game = game;
         sheetWalk = new Texture("Envie.png");
         idleFrame = new TextureRegion(sheetWalk, 50, 10, 240, 160);
         attackFrame = new TextureRegion(sheetWalk, 250, 410, 240, 160);
         barFull = new Texture("FullHealthBar.png");
         barEmpty = new Texture("EmptyHealthBar.png");
-        body.w = 240;
-        body.h = 160;
+        body.w = 360;
+        body.h = 240;
     }
 
+    /**
+    * @param delta défini le délai des actions.
+    * @param map défini les collision du niveau actuel.
+    * @param player défini le joueur.
+    * @see Character
+    * @see CollisionMap
+    */
     public void update(float delta, CollisionMap map, Character player) {
         dashCooldown = Math.max(0f, dashCooldown - delta);
         attackCooldown = Math.max(0f, attackCooldown - delta);
@@ -162,6 +176,10 @@ public class Envie extends Monster {
         attacking = false;
     }
 
+    /**
+    * @return la zone d'attaque du boss.
+    * @see Body
+    */
     public Rectangle getAttackBox() {
         float ax = facingRight ? body.x + body.w / 2f : body.x - body.w / 2f - ATTACK_RANGE;
         return new Rectangle(ax, body.y + 20f, ATTACK_RANGE, body.h - 40f);
@@ -212,6 +230,10 @@ public class Envie extends Monster {
     //                  RENDU                      \\
     // =========================================== \\
 
+    /**
+    * @param batch défini le sprite du boss.
+    * @see SpriteBatch
+    */
     public void render(SpriteBatch batch) {
         for (Monster m : summons) {
             if (m instanceof Squelette) ((Squelette) m).render(batch);
@@ -228,9 +250,9 @@ public class Envie extends Monster {
 
         float size = 230f;
         if (facingRight) {
-            batch.draw(frame, body.x - size / 2f, body.y, size, size);
+            batch.draw(frame, body.x - size / 2f, body.y, body.w, body.h);
         } else {
-            batch.draw(frame, body.x + size / 2f, body.y, -size, size);
+            batch.draw(frame, body.x + size / 2f, body.y, -body.w, body.h);
         }
 
         float barW = 200f;

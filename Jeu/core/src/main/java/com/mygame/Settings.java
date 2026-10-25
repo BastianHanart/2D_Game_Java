@@ -3,6 +3,9 @@ package com.mygame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 
+/**
+ * Représente les paramètres des touches et de l'écran
+*/
 public class Settings {
 
     // =====================================================

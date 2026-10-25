@@ -2,6 +2,9 @@ package com.mygame;
 
 import com.badlogic.gdx.math.Rectangle;
 
+/**
+ * Représente le corps physique d'un personnage; gère sa position, sa vitesse verticale, la gravité et les collisions avec la carte.
+*/
 public class Body {
     public float x, y;              // centre des pieds
     public float w = 55, h = 115;   // hitbox du corps : change-la quand tu veux
@@ -11,9 +14,18 @@ public class Body {
     private static final float GRAVITY = -3250f;
     private static final float STEP_DOWN = 60f;  // "colle" au sol en descente de pente
 
+    /**
+    * @param force permet de définir la vitesse de pousser du saut.
+    */
     public void jump(float force) { vy = force; onGround = false; }
 
-    /** dx = déplacement horizontal voulu cette frame, en pixels. */
+    /**
+    * @param map permet de gérer les collisions et les plateformes du niveau actuel.
+    * @see CollisionMap
+    * @param dx déplacement horizontal.
+    * @param dt déplacement verticale.
+    * @param dropThrough permet de savoir si on traverse ou non les élements (plateforme oui, sol non).
+    */
     public void move(CollisionMap map, float dx, float dt, boolean dropThrough) {
         // 1) Horizontal : murs
         x = map.moveX(x, dx, y, w / 2f, h);
@@ -37,6 +49,8 @@ public class Body {
             }
         }
     }
-
+    /**
+    * @return un nouveau rectangle de collision qui permet de définir les "dimensions" des éléments.
+    */
     public Rectangle rect() { return new Rectangle(x - w / 2f, y, w, h); }
 }
