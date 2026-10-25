@@ -170,12 +170,48 @@ Les sources Java fournies utilisent le package `com.mygame`.
 
 ## Lancement du projet
 
-Le ZIP fourni contient les fichiers sources Java, mais ne contient pas les fichiers de configuration du projet, tels que `build.gradle`, ni l'ensemble des ressources graphiques et audio nécessaires.
+Prérequis
 
-Il n'est donc pas possible de donner une commande de lancement fiable à partir de cette archive seule.
+Avant de lancer le jeu, il faut disposer de :
 
-Pour lancer le jeu, il faut disposer du projet LibGDX complet, de sa configuration de compilation et des ressources utilisées par les classes Java. Les fichiers graphiques et audio sont chargés par leur nom, par exemple `MenuBackground.png`, `Personnage_Marche.png`, `Personnage_Jump.png`, `platform.png` ou les fichiers de musique associés aux niveaux. Ils doivent être placés dans le répertoire de ressources attendu par le projet.
+Git pour récupérer le dépôt.
 
-## Limites de cette documentation
+Un JDK Java compatible avec la configuration Gradle du projet.
 
-Ce README a été rédigé à partir des fichiers Java présents dans l'archive. Les fichiers de ressources, les paramètres de compilation et les éventuels documents de conception n'étaient pas inclus dans le ZIP. Les informations qui en dépendent, comme la procédure exacte de compilation, la liste exhaustive des niveaux et les caractéristiques visuelles de toutes les ressources, ne sont donc pas détaillées ici.
+Gradle sera utilisé automatiquement grâce au Gradle Wrapper fourni dans le dépôt.
+
+1. Récupérer le projet
+
+Cloner le dépôt Git et entrer dans le dossier du projet :
+
+```bash
+git clone git@github.com:EpitechBachelorPromo2028/B-OOP-301-LIL-3-1-2dgame-9.git
+cd git@github.com:EpitechBachelorPromo2028/B-OOP-301-LIL-3-1-2dgame-9.git/Jeu
+```
+
+2. Vérifier l'installation de Java
+
+Vérifier que Java et son compilateur sont disponibles :
+
+java -version
+javac -version
+
+Si ces commandes échouent, installer un JDK compatible avec le projet.
+
+3. Autoriser l'exécution du Gradle Wrapper
+
+Sous Linux, exécuter :
+
+chmod +x gradlew
+
+Cette commande permet d'exécuter le script Gradle fourni avec le projet.
+
+4. Compiler et lancer le jeu
+
+```
+./gradlew lwjgl3:run
+```
+
+Gradle télécharge automatiquement les dépendances nécessaires si elles ne sont pas déjà présentes, compile le projet et lance le jeu.
+
+Lors du premier lancement, cette opération peut prendre un peu plus de temps.
